@@ -29,6 +29,29 @@
             padding-bottom: 60px;
         }
 
+                /* Ефект для зміни смайлика на ім'я при наведенні */
+        .brand-name {
+            display: inline-block;
+            font-size: 2.2rem;
+            color: #ffffff;
+            font-weight: 700;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+        
+        .brand-name .name-text {
+            display: none; /* Ховаємо ім'я за замовчуванням */
+        }
+        
+        .brand-name:hover .emoji-text {
+            display: none; /* Ховаємо смайлик при наведенні */
+        }
+        
+        .brand-name:hover .name-text {
+            display: inline-block; /* Показуємо ім'я при наведенні */
+            color: var(--accent);  /* Можна підсвітити акцентним кольором */
+        }
+
         /* Шапка сайту */
         header {
             max-width: 1000px;
