@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональний Tech-Блог & Портфоліо</title>
+    <title>Олег Лясковський | Tech Space</title>
     <style>
-        /* Базові налаштування для темної теми */
+        /* Налаштування теми за кольорами CustomTkinter */
         :root {
-            --bg-color: #0d1117;       /* Глибокий темний фон */
-            --card-bg: #161b22;        /* Трохи світліший тон для карток */
-            --text-main: #c9d1d9;      /* Світло-сірий текст для легкого читання */
-            --text-muted: #8b949e;     /* Текст для другорядних елементів */
-            --accent: #58a6ff;         /* Акуратний синій акцент */
-            --border-color: #30363d;   /* Тонкі межі */
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --accent: #4361ee;
+            --accent-hover: #3a56d4;
+            --text: #e0e0e0;
+            --text-dim: #8888aa;
+            --border: #2a2a44;
         }
 
         * {
@@ -23,265 +25,193 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            color: var(--text);
             line-height: 1.6;
-            padding-bottom: 60px;
-        }
-
-                /* Ефект для зміни смайлика на ім'я при наведенні */
-        .brand-name {
-            display: inline-block;
-            font-size: 2.2rem;
-            color: #ffffff;
-            font-weight: 700;
-            cursor: default;
-            transition: all 0.3s ease;
-        }
-        
-        .brand-name .name-text {
-            display: none; /* Ховаємо ім'я за замовчуванням */
-        }
-        
-        .brand-name:hover .emoji-text {
-            display: none; /* Ховаємо смайлик при наведенні */
-        }
-        
-        .brand-name:hover .name-text {
-            display: inline-block; /* Показуємо ім'я при наведенні */
-            color: var(--accent);  /* Можна підсвітити акцентним кольором */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         /* Шапка сайту */
         header {
-            max-width: 1000px;
+            max-width: 800px;
+            width: 100%;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 20px 40px 20px;
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        header h1 {
-            font-size: 2.2rem;
+        /* Ефект для зміни смайлика на ім'я при наведенні */
+        .brand-name {
+            display: inline-block;
+            font-size: 2.5rem;
             color: #ffffff;
-            margin-bottom: 10px;
             font-weight: 700;
+            cursor: default;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+        
+        .brand-name .name-text {
+            display: none;
+        }
+        
+        .brand-name:hover .emoji-text {
+            display: none;
+        }
+        
+        .brand-name:hover .name-text {
+            display: inline-block;
+            color: var(--accent);
         }
 
         header p {
-            color: var(--text-muted);
+            color: var(--text-dim);
             font-size: 1.1rem;
         }
 
-        /* Навігація по категоріях */
-        nav {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: var(--card-bg);
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        nav a:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Головний контент */
+        /* Головний контейнер з картками-категоріями */
         main {
-            max-width: 1000px;
+            max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Секція / Категорія */
-        .category-section {
-            margin-bottom: 50px;
-            scroll-margin-top: 30px; /* Для плавного скролу до секції */
-        }
-
-        .category-title {
-            font-size: 1.5rem;
-            color: #ffffff;
-            margin-bottom: 20px;
+            padding: 20px;
+            flex-grow: 1;
             display: flex;
             align-items: center;
-            gap: 10px;
         }
 
-        .category-title::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 24px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        /* Сітка для карток всередині категорії */
-        .grid {
+        /* Сітка 2х2, яка на мобільних стає в 1 колонку */
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            width: 100%;
         }
 
-        /* Стиль картки (для програм чи статей) */
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: #444c56;
-        }
-
-        .card h3 {
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        /* Посилання всередині карток (наприклад, Завантажити або Читати) */
-        .card-link {
-            color: var(--accent);
+        /* Картка-посилання (кнопка) */
+        .category-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
             text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        /* Ефект наведення на всю картку */
+        .category-card:hover {
+            transform: translateY(-4px);
+            background-color: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+
+        .category-card h2 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            transition: color 0.2s ease;
+        }
+
+        .category-card:hover h2 {
+            color: var(--accent);
+        }
+
+        .category-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* Стрілочка-індикатор внизу картки */
+        .card-action {
+            color: var(--accent);
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease;
         }
 
-        .card-link:hover {
-            text-decoration: underline;
+        .category-card:hover .card-action {
+            color: var(--accent-hover);
         }
 
-        /* Підвал сайту */
+        /* Підвал */
         footer {
             text-align: center;
-            color: var(--text-muted);
+            color: var(--text-dim);
             font-size: 0.85rem;
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
         }
 
-        /* Адаптивність для мобільних */
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            nav { gap: 10px; }
-            nav a { width: 100%; text-align: center; }
+        /* Адаптивність */
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            .brand-name {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- Шапка сайту -->
-<header>
-    <div class="brand-name">
-        <span class="emoji-text">(◔⁠‿⁠◔⁠)</span>
-        <span class="name-text">Олег Лясковський</span>
-    </div>
-    <p>Код, системи, автоматизація та інженерні рішення</p>
-</header>
-
-    <nav>
-        <a href="#apps">Мої програми</a>
-        <a href="#windows">Мій Windows</a>
-        <a href="#android">Мій Android</a>
-        <a href="#tools">Мій інструмент & Смарт</a>
-    </nav>
+    <header>
+        <div class="brand-name">
+            <span class="emoji-text">(◔⁠‿⁠◔⁠)</span>
+            <span class="name-text">Олег Лясковський</span>
+        </div>
+        <p>Код, системи, автоматизація та інженерні рішення</p>
+    </header>
 
     <main>
+        <div class="categories-grid">
 
-        <section class="category-section" id="apps">
-            <h2 class="category-title">Мої програми</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Назва програми 1</h3>
-                    <p>Короткий опис того, що робить твоя програма, які технології ти використовував та для чого вона потрібна.</p>
-                    <a href="#" class="card-link">Дивитись на GitHub →</a>
+            <a href="apps.html" class="category-card">
+                <div>
+                    <h2>Мої програми</h2>
+                    <p>Каталог розробленого софту, утиліт та скриптів. Описи технологій, скріншоти та прямі посилання на репозиторії.</p>
                 </div>
-                <div class="card">
-                    <h3>Назва програми 2</h3>
-                    <p>Тут буде опис твого другого софту. Мінімалістичний інтерфейс дозволяє фокусуватись на тексті.</p>
-                    <a href="#" class="card-link">Дивитись на GitHub →</a>
-                </div>
-            </div>
-        </section>
+                <div class="card-action">Перейти до програм →</div>
+            </a>
 
-        <section class="category-section" id="windows">
-            <h2 class="category-title">Мій Windows</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Оптимальне налаштування ОС після інсталяції</h3>
-                    <p>Покрокова інструкція, які служби вимкнути, які утиліти встановити, щоб система працювала максимально швидко та без сміття.</p>
-                    <a href="#" class="card-link">Читати статтю →</a>
+            <a href="windows.html" class="category-card">
+                <div>
+                    <h2>Мій Windows</h2>
+                    <p>Збірка інструкцій з оптимізації ОС, тонкого налаштування, автоматизації софту та вирішення системних проблем.</p>
                 </div>
-                <div class="card">
-                    <h3>Автоматизація через Сhocolatey / Winget</h3>
-                    <p>Як встановлювати всі необхідні програми однією командою через консоль без постійного клацання "Далі-Далі".</p>
-                    <a href="#" class="card-link">Читати статтю →</a>
-                </div>
-            </div>
-        </section>
+                <div class="card-action">Відкрити розділ →</div>
+            </a>
 
-        <section class="category-section" id="android">
-            <h2 class="category-title">Мій Android</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Корисні додатки з F-Droid</h3>
-                    <p>Добірка перевірених та безпечних open-source програм для Android, яких немає у звичайному Google Play.</p>
-                    <a href="#" class="card-link">Переглянути список →</a>
+            <a href="android.html" class="category-card">
+                <div>
+                    <h2>Мій Android</h2>
+                    <p>Корисні додатки, open-source інструменти, автоматизація рутини та статті, що спрощують життя на смартфоні.</p>
                 </div>
-                <div class="card">
-                    <h3>Резервне копіювання даних без хмари</h3>
-                    <p>Налаштування синхронізації файлів і бекапів між телефоном та комп'ютером за допомогою Syncthing.</p>
-                    <a href="#" class="card-link">Читати статтю →</a>
-                </div>
-            </div>
-        </section>
+                <div class="card-action">Дивитись статті →</div>
+            </a>
 
-        <section class="category-section" id="tools">
-            <h2 class="category-title">Мій інструмент & Смарт-інженерія</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Проєктування та збірка електрощита</h3>
-                    <p>Мій досвід розрахунку навантажень, вибору модульного обладнання (реле напруги, ПЗВ, автомати) для квартири чи будинку.</p>
-                    <a href="#" class="card-link">Читати статтю →</a>
+            <a href="tools.html" class="category-card">
+                <div>
+                    <h2>Мій інструмент</h2>
+                    <p>Все про електрику, проєктування щитів, розумні будинки (Home Assistant) та практичні залізячні рішення.</p>
                 </div>
-                <div class="card">
-                    <h3>Розумний будинок на базі Home Assistant</h3>
-                    <p>З чого почати побудову локального розумного будинку. Інтеграція датчиків Zigbee та створення перших автоматизацій.</p>
-                    <a href="#" class="card-link">Читати статтю →</a>
-                </div>
-            </div>
-        </section>
+                <div class="card-action">Увійти в майстерню →</div>
+            </a>
 
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 Твоє Ім'я / Нікнейм. Побудовано на GitHub Pages.</p>
+        <p>&copy; 2026 Олег Лясковський. Побудовано на GitHub Pages.</p>
     </footer>
 
 </body>
