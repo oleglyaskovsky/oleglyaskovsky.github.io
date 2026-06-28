@@ -108,7 +108,9 @@
             font-size: 1rem;
             font-weight: 600;
             transition: background-color 0.2s ease, transform 0.2s ease;
-            margin-bottom: 40px;
+            white-space: nowrap;
+            align-self: center;
+            margin-left: auto;
         }
 
         .download-btn:hover {
@@ -140,6 +142,7 @@
             color: var(--text-dim);
             font-size: 0.95rem;
             line-height: 1.7;
+            text-align: justify;
         }
 
         /* Список категорій програм */
@@ -240,9 +243,13 @@
         /* Адаптив */
         @media (max-width: 600px) {
             .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .download-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
             }
 
             .app-header-text h1 {
@@ -271,16 +278,15 @@
                 <h1>Software Installer</h1>
                 <div class="app-subtitle">Автоматизована установка програм для Windows</div>
             </div>
+            <a href="https://mega.nz/folder/bYkV2ZZI#MvqUUBqNxpiqX0rtS1QFpg" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
         </div>
-
-        <a href="https://mega.nz/folder/bYkV2ZZI#MvqUUBqNxpiqX0rtS1QFpg" class="download-btn" target="_blank" rel="noopener noreferrer">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Завантажити з MEGA
-        </a>
 
         <div class="section">
             <div class="section-title">Про програму</div>
