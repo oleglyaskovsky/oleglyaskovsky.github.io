@@ -56,7 +56,12 @@
             color: var(--accent);
         }
 
-        /* Шапка програми */
+        .app-header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
         .app-header {
             display: flex;
             align-items: center;
@@ -259,7 +264,9 @@
         </div>
 
         <div class="app-header">
-            <div class="app-header-icon">📦</div>
+            <div class="app-header-icon">
+                <img src="software-installer.png" alt="Software Installer">
+            </div>
             <div class="app-header-text">
                 <h1>Software Installer</h1>
                 <div class="app-subtitle">Автоматизована установка програм для Windows</div>
