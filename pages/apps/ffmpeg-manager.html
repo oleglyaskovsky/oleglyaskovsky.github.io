@@ -1,1 +1,397 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFmpeg Manager | Олег Лясковський</title>
+    <style>
+        :root {
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --accent: #4361ee;
+            --accent-hover: #3a56d4;
+            --success: #06d6a0;
+            --text: #e0e0e0;
+            --text-dim: #8888aa;
+            --text-muted: #555577;
+            --border: #2a2a44;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Навігація */
+        .back-nav {
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+        }
+
+        .app-header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+
+        .app-header-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(67, 97, 238, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .app-header-text h1 {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .app-header-text .app-subtitle {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Кнопка завантаження */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+            align-self: center;
+            margin-left: auto;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .download-btn svg {
+            flex-shrink: 0;
+        }
+
+        /* Блоки опису */
+        .section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .section p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        /* Список категорій команд */
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .category-item {
+            background-color: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .category-item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .category-item-programs {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* Список особливостей */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-list li {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Вимоги */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .req-item {
+            background-color: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+        }
+
+        .req-label {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .req-value {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Дисклеймер */
+        .disclaimer {
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .disclaimer strong {
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .app-header {
+                flex-wrap: wrap;
+            }
+
+            .download-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .app-header-text h1 {
+                font-size: 1.6rem;
+            }
+
+            .section {
+                padding: 18px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="ffmpeg-manager.png" alt="FFmpeg Manager">
+            </div>
+            <div class="app-header-text">
+                <h1>FFmpeg Manager</h1>
+                <div class="app-subtitle">Інтеграція FFmpeg у контекстне меню Windows</div>
+            </div>
+            <a href="https://mega.nz/folder/3BlSnTSA#AspB4F_n-SxI_6IIADW1Ew" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                FFmpeg Manager — це зручний графічний інтерфейс для інтеграції FFmpeg у контекстне меню Windows.
+                Замість того щоб кожного разу відкривати термінал і вручну вводити команди, достатньо клацнути правою
+                кнопкою миші на відео-, аудіофайлі або зображенні — і потрібна операція з'явиться прямо в меню Провідника.
+                Програма записує обрані команди до реєстру Windows (HKCU) і автоматично прив'язує їх до відповідних
+                типів файлів, після чого FFmpeg стає доступним у два кліки для будь-якого медіафайлу в системі.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Категорії команд</div>
+            <div class="category-list">
+
+                <div class="category-item">
+                    <div class="category-item-title">🎬 Відео</div>
+                    <div class="category-item-programs">Стиснення (H.264, H.265), обрізання, поворот, дзеркалення, зміна роздільної здатності (480p–4K), зміна FPS, прискорення/сповільнення, реверс, стабілізація, видалення метаданих</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">🎵 Аудіо</div>
+                    <div class="category-item-programs">Витяг аудіодоріжки (MP3, WAV, FLAC, AAC), нормалізація гучності, зміна бітрейту, частоти дискретизації, конвертація між моно/стерео, видалення тиші, шумозаглушення, ефекти fade in/out</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">🔄 Конвертація</div>
+                    <div class="category-item-programs">Конвертація між форматами: MP4, MKV, AVI, WebM, MOV, TS, MP3, WAV, FLAC, OGG, AAC, Opus, GIF, а також витяг першого кадру у PNG або JPG</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">🖼️ Зображення та кадри</div>
+                    <div class="category-item-programs">Створення GIF (звичайне та HQ), витяг кадрів (по 1/сек або всіх), мініатюра з відео, додавання водяного знаку, мозаїка прев'ю 4×4</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">🎨 Фільтри</div>
+                    <div class="category-item-programs">Чорно-біле, сепія, вінтаж, негатив, яскравість, контраст, насиченість, розмиття, різкість, шумозаглушення, деінтерлейсинг, теплі/холодні відтінки, вінь'єтка, виявлення країв</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">📝 Субтитри</div>
+                    <div class="category-item-programs">Вшивання субтитрів у відео (hardcoded), додавання субтитрів як окремої доріжки (soft), витяг вбудованих субтитрів у файл SRT</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">ℹ️ Інформація</div>
+                    <div class="category-item-programs">Детальна інформація про файл через ffprobe: кодеки, роздільна здатність, тривалість, бітрейт, метадані (теги)</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">🌐 Стрімінг</div>
+                    <div class="category-item-programs">Розбиття відео на сегменти HLS для потокового відтворення, створення DASH маніфесту для адаптивного стрімінгу</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Інтеграція безпосередньо у Провідник Windows — команди FFmpeg доступні правою кнопкою миші на будь-якому медіафайлі</li>
+                <li>Більше 70 готових FFmpeg-команд, організованих у 8 категорій: відео, аудіо, конвертація, зображення, фільтри, субтитри, інформація, стрімінг</li>
+                <li>Індикатор наявності FFmpeg — програма перевіряє встановлення при запуску та пропонує посилання на завантаження якщо FFmpeg не знайдено</li>
+                <li>Виконання команд у фоновому режимі з окремим вікном прогресу, живим виводом FFmpeg та кнопкою скасування</li>
+                <li>Команди з позначкою «📎 +файл» відкривають діалог вибору другого файлу (субтитри, аудіодоріжка, водяний знак)</li>
+                <li>Команди з позначкою «⌨️ параметри» відкривають форму введення (наприклад, час початку та тривалість для довільного обрізання)</li>
+                <li>Інформаційні команди (ℹ️) виводять результат роботи ffprobe у зручному текстовому вікні без збереження файлу</li>
+                <li>Кнопки «Вибрати все» та «Зняти все» для зручного керування в межах кожної категорії</li>
+                <li>Записи реєстру вносяться лише до HKCU — без змін у системних гілках, не вимагаються права адміністратора</li>
+                <li>Кнопка «Оновити Провідник» перезапускає explorer.exe для миттєвого застосування змін у контекстному меню</li>
+                <li>Підтримка ffmpeg.exe поруч із програмою як альтернатива системному PATH — корисно для портативного використання</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Розрядність</div>
+                    <div class="req-value">x64</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Не потрібні</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">FFmpeg</div>
+                    <div class="req-value">Потрібен окремо</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="disclaimer">
+            <strong>Відмова від відповідальності (Disclaimer)</strong>
+            Усі програми та поради, опубліковані на цьому сайті, є моїми особистими інструментами, які я успішно використовую сам. Я надаю їх як є (as is) без будь-яких гарантій роботи, безпеки чи придатності для ваших цілей. Використання будь-якої утиліти або поради здійснюється виключно на ваш власний ризик. Рекомендую перед використанням будь-якої програми зробити резервну копію всіх важливих даних. Я не несу відповідальності за будь-які наслідки, втрату даних чи інші проблеми, що можуть виникнути в результаті використання матеріалів сайту.
+        </footer>
+
+    </div>
+
+</body>
+</html>
