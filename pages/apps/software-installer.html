@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Installer | Олег Лясковський</title>
+    <style>
+        :root {
+            --bg-dark: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #22223a;
+            --accent: #4361ee;
+            --accent-hover: #3a56d4;
+            --success: #06d6a0;
+            --text: #e0e0e0;
+            --text-dim: #8888aa;
+            --text-muted: #555577;
+            --border: #2a2a44;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Навігація */
+        .back-nav {
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+        }
+
+        /* Шапка програми */
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+
+        .app-header-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(67, 97, 238, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .app-header-text h1 {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .app-header-text .app-subtitle {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        /* Кнопка завантаження */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            margin-bottom: 40px;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .download-btn svg {
+            flex-shrink: 0;
+        }
+
+        /* Блоки опису */
+        .section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .section p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Список категорій програм */
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .category-item {
+            background-color: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .category-item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .category-item-programs {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* Список особливостей */
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-list li {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Вимоги */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .req-item {
+            background-color: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+        }
+
+        .req-label {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .req-value {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Дисклеймер */
+        .disclaimer {
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .disclaimer strong {
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .app-header-text h1 {
+                font-size: 1.6rem;
+            }
+
+            .section {
+                padding: 18px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">📦</div>
+            <div class="app-header-text">
+                <h1>Software Installer</h1>
+                <div class="app-subtitle">Автоматизована установка програм для Windows</div>
+            </div>
+        </div>
+
+        <a href="https://mega.nz/folder/bYkV2ZZI#MvqUUBqNxpiqX0rtS1QFpg" class="download-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Завантажити з MEGA
+        </a>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                Software Installer — це зручний інструмент для швидкого розгортання Windows-середовища після чистої установки системи.
+                Замість того щоб шукати кожну програму окремо в інтернеті, достатньо відзначити потрібні галочки і натиснути одну кнопку —
+                програма сама завантажить і встановить усе вибране у фоновому режимі, паралельно та без зайвих кліків.
+                Підтримуються як звичайні інсталятори через WinGet, так і власні архіви з налаштованими конфігураціями.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Категорії програм</div>
+            <div class="category-list">
+
+                <div class="category-item">
+                    <div class="category-item-title">Системні компоненти</div>
+                    <div class="category-item-programs">.NET Framework 3.5 і 4.8, DirectX, Microsoft Visual C++ Redistributable 2005–2022</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">Офісні утиліти</div>
+                    <div class="category-item-programs">Everything, File Converter, Notepad++, STDU Viewer, Total Commander, WinRAR — з готовими налаштуваннями</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">Microsoft Office</div>
+                    <div class="category-item-programs">Microsoft 365, Office 2024, 2021, 2019, 2016, 2013 — офіційний C2R-інсталятор, вибір версії одним кліком</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">Інтернет</div>
+                    <div class="category-item-programs">Chrome, Firefox, Opera, Telegram, Viber, Signal, Zoom, qBittorrent, Free Download Manager, MEGASync, Cloudflare WARP та інші</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">Медіа</div>
+                    <div class="category-item-programs">VLC, foobar2000, FastStone Image Viewer, K-Lite Codec Pack, ShareX, FFmpeg Manager</div>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-item-title">Утиліти</div>
+                    <div class="category-item-programs">DefenderKiller MOD, EDGE/WV2 Killer, UWPDeleter, Win 10 Tweaker, WinClean, WinClick, Windows Blue Folder</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Паралельна установка кількох програм одночасно без черги очікування</li>
+                <li>Підтримка WinGet: автоматична перевірка наявності та можливість встановити або оновити прямо з інтерфейсу</li>
+                <li>Установка Microsoft Visual C++ Redistributable одразу у двох розрядностях (x86 + x64) за один клік</li>
+                <li>Завантаження Microsoft Office будь-якої версії через офіційний C2R-канал з автоматичним визначенням розрядності системи</li>
+                <li>Утиліти підтримують два режими: ЛКМ — завантажити і запустити, ПКМ — зберегти portable-версію в папку <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">C:\Portable</code></li>
+                <li>Блок "Інформація про систему" показує версію Windows (коректно розрізняє Windows 10 і 11), модель процесора та обсяг оперативної пам'яті з максимально можливим</li>
+                <li>Автоматичне визначення Windows 10 / Windows 11 для правильного вибору версії утиліт</li>
+                <li>Кнопки "Обрати все" та "Зняти виділення" для зручного керування списком</li>
+                <li>Запускається лише з правами адміністратора — програма автоматично запитує підвищення привілеїв</li>
+                <li>Налаштування Notepad++, WinRAR та інших програм постачаються у вигляді готових пакетів, що розгортаються автоматично</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Розрядність</div>
+                    <div class="req-value">x86 / x64</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Адміністратор</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Інтернет</div>
+                    <div class="req-value">Потрібен</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="disclaimer">
+            <strong>Відмова від відповідальності (Disclaimer)</strong>
+            Усі програми та поради, опубліковані на цьому сайті, є моїми особистими інструментами, які я успішно використовую сам. Я надаю їх як є (as is) без будь-яких гарантій роботи, безпеки чи придатності для ваших цілей. Використання будь-якої утиліти або поради здійснюється виключно на ваш власний ризик. Рекомендую перед використанням будь-якої програми зробити резервну копію всіх важливих даних. Я не несу відповідальності за будь-які наслідки, втрату даних чи інші проблеми, що можуть виникнути в результаті використання матеріалів сайту.
+        </footer>
+
+    </div>
+
+</body>
+</html>
