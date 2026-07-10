@@ -179,24 +179,41 @@
             pointer-events: none;
         }
 
-		#splash-logo {
-			width: 280px;
-			height: 280px;
-			max-width: 60vw;
-			max-height: 60vw;
-            object-fit: contain;
+        #splash-logo {
+            width: 160px;
+            height: 160px;
+            max-width: 40vw;
+            max-height: 40vw;
             cursor: pointer;
             user-select: none;
             -webkit-user-drag: none;
-            border-radius: 28px;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+            /* Логотип малюється не як картинка, а як заливка кольором,
+               "вирізана" по формі Logo.png через маску — тому колір
+               можна плавно міняти на hover, як і в заголовків */
+            background-color: #ffffff;
+            -webkit-mask-image: url("Logo.png");
+            mask-image: url("Logo.png");
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+        }
+
+        #splash-logo:hover,
+        #splash-logo:focus-visible {
+            background-color: var(--accent);
         }
 
         #splash-logo:active,
         #splash-logo.pressed {
             transform: translateY(10px) scale(0.97);
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+            background-color: var(--accent-hover);
         }
 
         #splash-logo.released {
@@ -235,7 +252,7 @@
 <body>
 
     <div id="splash">
-        <img id="splash-logo" src="Logo.png" alt="Олег Лясковський">
+        <div id="splash-logo" role="button" tabindex="0" aria-label="Олег Лясковський"></div>
         <div class="splash-hint">натисніть на логотип</div>
     </div>
 
