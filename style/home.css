@@ -170,8 +170,8 @@ footer {
        «вирізана» по формі Logo.png через маску — тому колір
        можна плавно міняти на hover, як і в заголовків */
     background-color: #ffffff;
-    -webkit-mask-image: url("../Logo.png");
-    mask-image: url("../Logo.png");
+    -webkit-mask-image: url("../assets/splash-logo.png");
+    mask-image: url("../assets/splash-logo.png");
     -webkit-mask-size: contain;
     mask-size: contain;
     -webkit-mask-repeat: no-repeat;
