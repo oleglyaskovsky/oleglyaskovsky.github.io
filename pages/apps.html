@@ -4,192 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мої програми | Олег Лясковський</title>
-    <style>
-        /* Базові кольори CustomTkinter (синхронізовані з головною) */
-        :root {
-            --bg-dark: #0f0f1a;
-            --bg-card: #1a1a2e;
-            --bg-card-hover: #22223a;
-            --accent: #4361ee;
-            --accent-hover: #3a56d4;
-            --text: #e0e0e0;
-            --text-dim: #8888aa;
-            --text-muted: #555577;
-            --border: #2a2a44;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
-            line-height: 1.5;
-            padding: 40px 20px;
-        }
-
-        /* Контейнер сторінки */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Навігація / Кнопка назад */
-        .back-nav {
-            margin-bottom: 30px;
-        }
-
-        .back-btn {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .back-btn:hover {
-            color: var(--accent);
-        }
-
-        /* Заголовок сторінки */
-        header h1 {
-            font-size: 2.2rem;
-            color: #ffffff;
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-
-        /* Секції категорій */
-        .category-section {
-            margin-bottom: 40px;
-        }
-
-        .category-title {
-            font-size: 1.3rem;
-            color: var(--text-dim);
-            margin-bottom: 20px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* Сітка для карток програм (дві в ряд) */
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        /* Нова мінімалістична картка програми */
-        .app-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .app-card:hover {
-            background-color: var(--bg-card-hover);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Контейнер для іконки */
-        .app-icon {
-            width: 64px;
-            height: 64px;
-            background-color: rgba(67, 97, 238, 0.05); /* Легка підсвітка за замовчуванням */
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .app-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Заглушка, якщо іконки немає */
-        .app-icon::after {
-            content: "⚙️";
-            font-size: 1.5rem;
-        }
-        /* Якщо картинка завантажиться, ховаємо емодзі-заглушку */
-        .app-icon:has(img)::after {
-            display: none;
-        }
-
-        /* Текстова частина картки */
-        .app-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .app-title {
-            font-size: 1.15rem;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .app-title:hover {
-            color: var(--accent);
-        }
-
-        .app-desc {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        /* Дисклеймер / Відмова від відповідальності */
-        .disclaimer {
-            margin-top: 60px;
-            padding: 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            line-height: 1.5;
-            text-align: justify;
-        }
-
-        .disclaimer strong {
-            color: var(--text-dim);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        /* Адаптивність для екранів телефонів */
-        @media (max-width: 600px) {
-            .apps-grid {
-                grid-template-columns: 1fr;
-            }
-            .app-card {
-                padding: 15px;
-                gap: 15px;
-            }
-            .app-icon {
-                width: 50px;
-                height: 50px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/apps.css">
 </head>
 <body>
 
@@ -211,9 +27,9 @@
                     
                     <div class="app-card">
                         <div class="app-icon">
-                            <img src="apps/font-restorer-cleaner.png" alt="Font Restorer & Cleaner"></div>
+                            <img src="apps/font-restorer-cleaner.png" alt="Font Restorer &amp; Cleaner"></div>
                         <div class="app-info">
-                            <a href="apps/font-restorer-cleaner.html" class="app-title">Font Restorer & Cleaner</a>
+                            <a href="apps/font-restorer-cleaner.html" class="app-title">Font Restorer &amp; Cleaner</a>
                             <div class="app-desc">Відновлення відображення шрифтів в Windows.</div>
                         </div>
                     </div>
@@ -300,12 +116,11 @@
 
         </main>
 
-        <footer class="disclaimer">
-            <strong>Відмова від відповідальності (Disclaimer)</strong>
-            Усі програми та поради, опубліковані на цьому сайті, є моїми особистими інструментами, які я успішно використовую сам. Я надаю їх як є (as is) без будь-яких гарантій роботи, безпеки чи придатності для ваших цілей. Використання будь-якої утиліти або поради здійснюється виключно на ваш власний ризик. Рекомендую перед використанням будь-якої програми зробити резервну копію всіх важливих даних. Я не несу відповідальності за будь-які наслідки, втрату даних чи інші проблеми, що можуть виникнути в результаті використання матеріалів сайту.
-        </footer>
+        <div id="footer-placeholder"></div>
 
     </div>
+
+    <script src="../js/footer.js"></script>
 
 </body>
 </html>

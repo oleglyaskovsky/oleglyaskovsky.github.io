@@ -1,0 +1,73 @@
+/* ============================================================
+   main.css — Загальні стилі для всього сайту
+   Підключається на кожній сторінці першим.
+   ============================================================ */
+
+/* Налаштування теми за кольорами CustomTkinter */
+:root {
+    --bg-dark: #0f0f1a;
+    --bg-card: #1a1a2e;
+    --bg-card-hover: #22223a;
+    --accent: #4361ee;
+    --accent-hover: #3a56d4;
+    --success: #06d6a0;
+    --text: #e0e0e0;
+    --text-dim: #8888aa;
+    --text-muted: #555577;
+    --border: #2a2a44;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* Контейнер сторінки */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Навігація / Кнопка назад */
+.back-nav {
+    margin-bottom: 30px;
+}
+
+.back-btn {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-btn:hover {
+    color: var(--accent);
+}
+
+/* Підвал — Дисклеймер */
+.disclaimer {
+    margin-top: 50px;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.disclaimer strong {
+    color: var(--text-dim);
+    display: block;
+    margin-bottom: 5px;
+}

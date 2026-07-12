@@ -1,0 +1,225 @@
+/* ============================================================
+   home.css — Стилі для головної сторінки (index.html)
+   ============================================================ */
+
+body {
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Шапка сайту */
+header {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 20px 40px 20px;
+    text-align: center;
+}
+
+/* Ефект для зміни смайлика на ім'я при наведенні */
+.brand-name {
+    display: inline-block;
+    font-size: 2.5rem;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: default;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+}
+
+.brand-name .name-text {
+    display: none;
+}
+
+.brand-name:hover .emoji-text {
+    display: none;
+}
+
+.brand-name:hover .name-text {
+    display: inline-block;
+    color: var(--accent);
+}
+
+header p {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+}
+
+/* Головний контейнер з картками-категоріями */
+main {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Сітка 2х2, яка на мобільних стає в 1 колонку */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+/* Картка-посилання (кнопка) */
+.category-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Ефект наведення на всю картку */
+.category-card:hover {
+    transform: translateY(-4px);
+    background-color: var(--bg-card-hover);
+    border-color: var(--accent);
+}
+
+.category-card h2 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    transition: color 0.2s ease;
+}
+
+.category-card:hover h2 {
+    color: var(--accent);
+}
+
+.category-card p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+/* Стрілочка-індикатор внизу картки */
+.card-action {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.category-card:hover .card-action {
+    color: var(--accent-hover);
+}
+
+/* Підвал головної сторінки */
+footer {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    padding: 40px 20px;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    .brand-name {
+        font-size: 2rem;
+    }
+}
+
+/* ===== Заставка (splash-екран з логотипом) ===== */
+#splash {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#splash.splash-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#splash-logo {
+    width: 420px;
+    height: 420px;
+    max-width: 55vw;
+    max-height: 55vw;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+    /* Логотип малюється не як картинка, а як заливка кольором,
+       «вирізана» по формі Logo.png через маску — тому колір
+       можна плавно міняти на hover, як і в заголовків */
+    background-color: #ffffff;
+    -webkit-mask-image: url("../Logo.png");
+    mask-image: url("../Logo.png");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+#splash-logo:hover,
+#splash-logo:focus-visible {
+    background-color: var(--accent);
+}
+
+#splash-logo:active,
+#splash-logo.pressed {
+    transform: translateY(10px) scale(0.97);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    background-color: var(--accent-hover);
+}
+
+#splash-logo.released {
+    transform: translateY(-120vh) scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.55, 0, 1, 0.45);
+}
+
+.splash-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    animation: hint-pulse 2s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+}
+
+/* Основний контент до відкриття заставки */
+#page-content {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#page-content.content-visible {
+    opacity: 1;
+}

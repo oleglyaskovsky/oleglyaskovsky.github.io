@@ -1,0 +1,274 @@
+/* ============================================================
+   app-detail.css — Стилі для сторінок окремих програм
+   (pages/apps/*.html)
+   ============================================================ */
+
+body {
+    padding: 40px 20px;
+}
+
+/* Шапка програми: іконка + назва + кнопка завантаження */
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.app-header-icon {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(67, 97, 238, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.app-header-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.app-header-text h1 {
+    font-size: 2rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.app-header-text .app-subtitle {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* Кнопка завантаження */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--accent);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+    align-self: center;
+    margin-left: auto;
+}
+
+.download-btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.download-btn svg {
+    flex-shrink: 0;
+}
+
+/* Блоки опису */
+.section {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.section p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+/* Блоки дій / три кнопки (Font Restorer) */
+.action-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.action-item {
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+}
+
+.action-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.action-badge {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.action-item-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.action-item-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+/* Список категорій / можливостей у картках */
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.category-item {
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.category-item-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.category-item-programs {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+/* Картки блоків інтерфейсу (Payment Calculator) */
+.block-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+}
+
+.block-item {
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.block-item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+}
+
+.block-badge {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.block-item-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.block-item-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+/* Список особливостей */
+.feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feature-list li {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.feature-list li::before {
+    content: "→";
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+}
+
+/* Вимоги */
+.requirements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.req-item {
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+}
+
+.req-label {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.req-value {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+    .app-header {
+        flex-wrap: wrap;
+    }
+
+    .download-btn {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .app-header-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .section {
+        padding: 18px 16px;
+    }
+}
