@@ -1,1 +1,221 @@
+/* ============================================================
+   windows-detail.css — Стилі для покрокових статей розділу
+   «Мій Windows» (windows/*.html)
+   ============================================================ */
 
+body {
+    padding: 40px 20px;
+}
+
+/* Шапка статті: іконка + назва + підзаголовок */
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.app-header-icon {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(67, 97, 238, 0.08);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.app-header-text h1 {
+    font-size: 2rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.app-header-text .app-subtitle {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* Блок одного кроку інструкції */
+.step-section {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.step-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.step-body p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: justify;
+    margin-bottom: 12px;
+}
+
+.step-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Ряд кнопок-посилань всередині кроку */
+.step-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
+.step-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.step-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.step-link svg {
+    flex-shrink: 0;
+}
+
+/* Дерево файлів / структура папок */
+.file-tree {
+    background-color: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    overflow-x: auto;
+    line-height: 1.7;
+    white-space: pre;
+    margin: 10px 0 12px;
+}
+
+.file-tree .comment {
+    color: var(--text-muted);
+}
+
+/* Список результатів / переваг */
+.feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feature-list li {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.feature-list li::before {
+    content: "→";
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+}
+
+/* Примітка-підказка */
+.note-box {
+    background-color: rgba(67, 97, 238, 0.08);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+}
+
+.note-box strong {
+    color: #ffffff;
+}
+
+/* Підсумковий блок */
+.section {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+    .app-header {
+        flex-wrap: wrap;
+    }
+
+    .app-header-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .step-section {
+        flex-direction: column;
+        padding: 18px 16px;
+        gap: 12px;
+    }
+
+    .step-number {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+    }
+}
