@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <title>Установка та налаштування Windows | Олег Лясковський</title>
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/windows-detail.css">
+</head>
+<body>
 
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../pages/windows.html" class="back-btn">← Мій Windows</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">🪟</div>
+            <div class="app-header-text">
+                <h1>Установка та налаштування Windows</h1>
+                <div class="app-subtitle">Покрокова інструкція з чистої установки Windows 10/11 з автоматичним налаштуванням системи</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про що ця стаття</div>
+            <p style="color:var(--text-dim); font-size:0.95rem; line-height:1.7; text-align:justify;">
+                Це мій особистий алгоритм чистої установки Windows: від завантаження образу до готової системи,
+                яка після першого ввімкнення вже має потрібний обліковий запис, вимкнену зайву телеметрію,
+                видалені непотрібні вбудовані застосунки, свої шпалери на робочому столі та ярлик програми
+                для швидкого встановлення решти софту. Все це працює за рахунок файлу автовідповідей,
+                який Windows читає ще під час установки, тож майже всі кроки майстра установки проходять
+                автоматично, без ручних кліків.
+            </p>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">1</div>
+            <div class="step-body">
+                <div class="step-title">Завантажте образ Windows</div>
+                <p>
+                    Завантажте останню доступну версію офіційного ISO-образу Windows 10 або Windows 11.
+                    Зручніше за все брати посилання через сервіс massgrave.dev — там завжди актуальні
+                    прямі посилання на образи від Microsoft, без стороннього втручання.
+                </p>
+                <div class="step-links">
+                    <a href="https://massgrave.dev/windows_10_links" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Образи Windows 10
+                    </a>
+                    <a href="https://massgrave.dev/windows_11_links" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Образи Windows 11
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">2</div>
+            <div class="step-body">
+                <div class="step-title">Створіть мультизавантажувальну флешку через Ventoy</div>
+                <p>
+                    Ventoy дозволяє один раз підготувати флешку, а потім просто перекидати на неї будь-яку
+                    кількість ISO-образів як звичайні файли — без повторного форматування чи перезапису
+                    щоразу, коли з'являється новий образ. Завантажте Ventoy, встановіть його на флешку
+                    (це відформатує накопичувач), а вже потім скопіюйте на неї потрібні ISO-файли.
+                </p>
+                <div class="step-links">
+                    <a href="https://www.ventoy.net/en/download.html" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Завантажити Ventoy
+                    </a>
+                </div>
+                <div class="note-box">
+                    <strong>Порада.</strong> Копіювання нового ISO-образу на готову Ventoy-флешку — це просто перетягування файлу.
+                    Саму флешку переробляти повторно не потрібно.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">3</div>
+            <div class="step-body">
+                <div class="step-title">Згенеруйте файл автовідповідей (autounattend.xml)</div>
+                <p>
+                    Щоб установка пройшла максимально «чисто» і без зайвих запитань майстра, а система одразу
+                    отримала потрібні налаштування, я користуюсь онлайн-генератором на schneegans.de. Він створює
+                    файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>,
+                    який Windows автоматично зчитує під час установки. У своєму конфігу я налаштовую:
+                </p>
+                <ul class="feature-list" style="margin-bottom:12px;">
+                    <li>Автоматичне створення локального облікового запису адміністратора без зайвих екранів входу в Microsoft-акаунт</li>
+                    <li>Випадкове ім'я комп'ютера за власним шаблоном</li>
+                    <li>Вимкнення телеметрії, SmartScreen, UAC, автоматичних перезавантажень та інших системних «дратівливих» речей</li>
+                    <li>Видалення переважної більшості вбудованих застосунків (Xbox, Cortana, OneDrive, Teams, Copilot, Paint 3D тощо)</li>
+                    <li>Темну тему оформлення, класичне контекстне меню та зручний вигляд Провідника й панелі завдань</li>
+                </ul>
+                <div class="step-links">
+                    <a href="https://schneegans.de/windows/unattend-generator/?LanguageMode=Interactive&PEMode=Default&WindowsEditionMode=Generic&WindowsEdition=pro&ProcessorArchitecture=x86&ProcessorArchitecture=amd64&ProcessorArchitecture=arm64&BypassRequirementsCheck=true&BypassNetworkCheck=true&UseConfigurationSet=true&HidePowerShellWindows=true&ComputerNameMode=Script&ComputerNameScript=return%20%27LYASK-WS-%7B0%3AD3%7D%27%20-f%20(%20Get-Random%20-Minimum%200%20-Maximum%20999%20);&TimeZoneMode=Implicit&UserAccountMode=Unattended&AccountName0=Admin&AccountDisplayName0=Admin&AccountPassword0=&AccountGroup0=Administrators&AutoLogonMode=Own&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&ShowFileExtensions=true&ClassicContextMenu=true&HideInfoTip=true&LaunchToThisPC=true&ShowEndTask=true&TaskbarSearch=Hide&TaskbarIconsMode=Empty&DisableWidgets=true&LeftTaskbar=true&HideTaskViewButton=true&ShowAllTrayIcons=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableWindowsUpdate=true&DisableUac=true&DisableSac=true&DisableSmartScreen=true&DisableFastStartup=true&DisableSystemRestore=true&EnableLongPaths=true&EnableRemoteDesktop=true&HardenSystemDriveAcl=true&DeleteJunctions=true&AllowPowerShellScripts=true&DisableLastAccess=true&PreventAutomaticReboot=true&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&MakeEdgeUninstallable=true&DisablePointerPrecision=true&DeleteWindowsOld=true&DisableAutomaticRestartSignOn=true&DisableWpbt=true&EffectsMode=Custom&ThumbnailsOrIcon=true&DragFullWindows=true&FontSmoothing=true&ListBoxSmoothScrolling=true&DropShadow=true&DeleteEdgeDesktopIcon=true&DesktopIconsMode=Custom&IconRecycleBin=true&IconThisPC=true&StartFoldersMode=Custom&StartFolderDocuments=true&StartFolderDownloads=true&StartFolderFileExplorer=true&WifiMode=Skip&ExpressSettings=DisableAll&LockKeysMode=Configure&CapsLockInitial=Off&CapsLockBehavior=Toggle&NumLockInitial=On&NumLockBehavior=Toggle&ScrollLockInitial=Off&ScrollLockBehavior=Toggle&StickyKeysMode=Disabled&ColorMode=Custom&SystemColorTheme=Dark&AppsColorTheme=Dark&AccentColor=%230078d4&WallpaperMode=Default&LockScreenMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveCamera=true&RemoveClipchamp=true&RemoveClock=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveWindowsHello=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGameAssist=true&RemoveGetHelp=true&RemoveHandwriting=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMathInputPanel=true&RemoveMediaFeatures=true&RemoveMixedReality=true&RemoveZuneVideo=true&RemoveNews=true&RemoveOffice365=true&RemoveOneDrive=true&RemoveOneNote=true&RemoveOneSync=true&RemoveOpenSSHClient=true&RemoveOutlook=true&RemovePaint=true&RemovePaint3D=true&RemovePeople=true&RemovePhotos=true&RemovePowerAutomate=true&RemovePowerShell2=true&RemovePowerShellISE=true&RemoveQuickAssist=true&RemoveRecall=true&RemoveRdpClient=true&RemoveSkype=true&RemoveSolitaire=true&RemoveSpeech=true&RemoveStepsRecorder=true&RemoveStickyNotes=true&RemoveTeams=true&RemoveGetStarted=true&RemoveToDo=true&RemoveVoiceRecorder=true&RemoveWallet=true&RemoveWeather=true&RemoveFaxAndScan=true&RemoveWindowsMediaPlayer=true&RemoveZuneMusic=true&RemoveWordPad=true&RemoveXboxApps=true&RemoveYourPhone=true&SystemScript0=%24out%20%3D%20%26%20%22%24env%3Awindir%5CSystem32%5Cpowercfg.exe%22%20%2FDuplicateScheme%20%27e9a42b02-d5df-448d-aa00-03f14749eb61%27%3B%0D%0Aif(%20%24out%20-match%20%27%5Cs(%5Ba-f0-9-%5D%7B36%7D)%5Cs%27%20)%20%7B%0D%0A%20%20%20%20%26%20%22%24env%3Awindir%5CSystem32%5Cpowercfg.exe%22%20%2FSetActive%20%24Matches%5B1%5D%3B%0D%0A%7D%20else%20%7B%0D%0A%20%20%20%20%27Could%20not%20enable%20Ultimate%20Performance%20power%20scheme.%27%20%7C%20Write-Warning%3B%0D%0A%7D&SystemScriptType0=Ps1&FirstLogonScript0=foreach(%20%24drive%20in%20%5BSystem.IO.DriveInfo%5D%3A%3AGetDrives()%20)%20%7B%0D%0A%20%20%20%20if(%20%24found%20%3D%20Join-Path%20-Path%20%24drive.RootDirectory%20-ChildPath%20%27sources%5Csxs%27%20-Resolve%20-ErrorAction%20%27SilentlyContinue%27%20)%20%7B%0D%0A%20%20%20%20%20%20%20%20Enable-WindowsOptionalFeature%20-Online%20-FeatureName%20%27NetFx3%27%20-Source%20%24found%20-NoRestart%3B%0D%0A%20%20%20%20%20%20%20%20return%3B%0D%0A%20%20%20%20%7D%0D%0A%7D%0D%0A%27Cannot%20find%20any%20files%20that%20match%20pattern.%27%20%7C%20Write-Warning%3B&FirstLogonScriptType0=Ps1&WdacMode=Skip&AppLockerMode=Skip&CoreIsolationMode=Disabled" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        Відкрити генератор із базовим конфігом
+                    </a>
+                </div>
+                <p>
+                    Налаштувавши всі потрібні пункти, натисніть кнопку завантаження на сторінці генератора —
+                    ви отримаєте готовий файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>.
+                    Його потрібно покласти в корінь ISO-образу — це зроблю на кроці 5.
+                </p>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">4</div>
+            <div class="step-body">
+                <div class="step-title">Підготуйте додаткові файли: шпалери та ярлик Software Installer</div>
+                <p>
+                    Крім автовідповідей, у мене є ще одна папка — <strong style="color:#fff;">Windows_ISO_Update</strong>,
+                    яку я також додаю в образ. Вона повторює структуру системних папок Windows, тому все, що
+                    в ній лежить, після установки автоматично опиняється у потрібному місці на диску:
+                </p>
+                <div class="file-tree">sources/
+└── $OEM$/
+    ├── $$/
+    │   └── Web/
+    │       └── Wallpaper/
+    │           └── MyWallpaper.jpg   <span class="comment">← шпалери, що встановляться одразу після установки</span>
+    └── $1/
+        └── Users/
+            └── Public/
+                └── Desktop/
+                    └── Software Installer.exe   <span class="comment">← ярлик на робочому столі</span></div>
+                <p>
+                    <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$$</code>
+                    у Windows OEM-розгортанні означає системну папку Windows, а
+                    <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$1</code> —
+                    корінь системного диску. Тобто файл із <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$$\Web\Wallpaper</code>
+                    після установки опиниться в <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">C:\Windows\Web\Wallpaper</code>,
+                    а програма з <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$1\Users\Public\Desktop</code> —
+                    просто на робочому столі. Software Installer — це мій власний застосунок для швидкого
+                    встановлення базового набору програм одразу після переустановки системи.
+                </p>
+                <div class="step-links">
+                    <a href="https://oleglyaskovsky.github.io/pages/apps/software-installer.html" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        Про Software Installer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">5</div>
+            <div class="step-body">
+                <div class="step-title">Об'єднайте все в один ISO-образ (AnyBurn)</div>
+                <p>
+                    Тепер потрібно «вшити» файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
+                    та вміст папки <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">Windows_ISO_Update</code>
+                    у завантажений на кроці 1 образ Windows. Для цього я користуюсь безкоштовною портативною
+                    програмою AnyBurn: у ній є режим редагування ISO-образу, який дозволяє додати
+                    <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
+                    у корінь образу та об'єднати папку <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">sources</code>
+                    з тією, що вже є всередині ISO. Після цього зберігаю результат як новий ISO-файл.
+                </p>
+                <div class="step-links">
+                    <a href="https://www.anyburn.com/anyburn.zip" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Завантажити AnyBurn Free Portable
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-number">6</div>
+            <div class="step-body">
+                <div class="step-title">Скопіюйте готовий образ на флешку</div>
+                <p>
+                    Залишається перекинути готовий ISO-файл на флешку з Ventoy (крок 2) — просто перетягуванням,
+                    як звичайний файл, без будь-якого повторного форматування. Під час завантаження з флешки
+                    Ventoy покаже меню вибору образу: обираєте потрібний ISO — і встановлення Windows проходить
+                    вже майже без вашої участі, за налаштованим на кроці 3 сценарієм.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Що ви отримаєте в результаті</div>
+            <ul class="feature-list">
+                <li>Установку без зайвих ручних кліків — майстер Windows проходить по заготовленому сценарію</li>
+                <li>Готовий локальний обліковий запис адміністратора одразу після першого входу</li>
+                <li>Вимкнену телеметрію, SmartScreen та інші фонові «стеження» системи</li>
+                <li>Видалені непотрібні вбудовані застосунки та чистий робочий стіл</li>
+                <li>Свої шпалери та темну тему одразу після завершення установки</li>
+                <li>Ярлик Software Installer на робочому столі — для швидкого встановлення решти потрібних програм</li>
+            </ul>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../js/footer.js"></script>
+
+</body>
+</html>
