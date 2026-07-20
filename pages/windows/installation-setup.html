@@ -68,29 +68,6 @@
         <div class="step-section">
             <div class="step-number">2</div>
             <div class="step-body">
-                <div class="step-title">Створіть мультизавантажувальну флешку через Ventoy</div>
-                <p>
-                    Ventoy дозволяє один раз підготувати флешку, а потім просто перекидати на неї будь-яку
-                    кількість ISO-образів як звичайні файли — без повторного форматування чи перезапису
-                    щоразу, коли з'являється новий образ. Завантажте Ventoy, встановіть його на флешку
-                    (це відформатує накопичувач), а вже потім скопіюйте на неї потрібні ISO-файли.
-                </p>
-                <div class="step-links">
-                    <a href="https://www.ventoy.net/en/download.html" class="step-link" target="_blank" rel="noopener noreferrer">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        Завантажити Ventoy
-                    </a>
-                </div>
-                <div class="note-box">
-                    <strong>Порада.</strong> Копіювання нового ISO-образу на готову Ventoy-флешку — це просто перетягування файлу.
-                    Саму флешку переробляти повторно не потрібно.
-                </div>
-            </div>
-        </div>
-
-        <div class="step-section">
-            <div class="step-number">3</div>
-            <div class="step-body">
                 <div class="step-title">Згенеруйте файл автовідповідей (autounattend.xml)</div>
                 <p>
                     Щоб установка пройшла максимально «чисто» і без зайвих запитань майстра, а система одразу
@@ -114,15 +91,15 @@
                 <p>
                     Налаштувавши всі потрібні пункти, натисніть кнопку завантаження на сторінці генератора —
                     ви отримаєте готовий файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>.
-                    Його потрібно покласти в корінь ISO-образу — це зроблю на кроці 5.
+                    Його потрібно покласти в корінь ISO-образу — це зроблю на кроці 4.
                 </p>
             </div>
         </div>
 
         <div class="step-section">
-            <div class="step-number">4</div>
+            <div class="step-number">3</div>
             <div class="step-body">
-                <div class="step-title">Підготуйте додаткові файли: шпалери та ярлик Software Installer</div>
+                <div class="step-title">Підготуйте додаткові файли: шпалери та Software Installer</div>
                 <p>
                     Крім автовідповідей, у мене є ще одна папка — <strong style="color:#fff;">Windows_ISO_Update</strong>,
                     яку я також додаю в образ. Вона повторює структуру системних папок Windows, тому все, що
@@ -139,6 +116,13 @@
             └── Public/
                 └── Desktop/
                     └── Software Installer.exe   <span class="comment">← ярлик на робочому столі</span></div>
+                <div class="note-box">
+                    <strong>Порада.</strong> Це не готовий архів для скачування — просто відтворіть таку структуру
+                    порожніх папок у себе і покладіть у неї свою актуальну версію
+                    <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">Software Installer.exe</code>
+                    та власні шпалери. Файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
+                    (крок 2) сюди не входить — його додаємо окремо в корінь ISO-образу на кроці 4.
+                </div>
                 <p>
                     <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$$</code>
                     у Windows OEM-розгортанні означає системну папку Windows, а
@@ -159,7 +143,7 @@
         </div>
 
         <div class="step-section">
-            <div class="step-number">5</div>
+            <div class="step-number">4</div>
             <div class="step-body">
                 <div class="step-title">Об'єднайте все в один ISO-образ (AnyBurn)</div>
                 <p>
@@ -181,35 +165,42 @@
         </div>
 
         <div class="step-section">
+            <div class="step-number">5</div>
+            <div class="step-body">
+                <div class="step-title">Створіть мультизавантажувальну флешку через Ventoy</div>
+                <p>
+                    Ventoy дозволяє один раз підготувати флешку, а потім просто перекидати на неї будь-яку
+                    кількість ISO-образів як звичайні файли — без повторного форматування чи перезапису
+                    щоразу, коли з'являється новий образ. Завантажте Ventoy, встановіть його на флешку
+                    (це відформатує накопичувач), а вже потім скопіюйте на неї потрібні ISO-файли.
+                </p>
+                <div class="step-links">
+                    <a href="https://www.ventoy.net/en/download.html" class="step-link" target="_blank" rel="noopener noreferrer">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Завантажити Ventoy
+                    </a>
+                </div>
+                <div class="note-box">
+                    <strong>Порада.</strong> Копіювання нового ISO-образу на готову Ventoy-флешку — це просто перетягування файлу.
+                    Саму флешку переробляти повторно не потрібно.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-section">
             <div class="step-number">6</div>
             <div class="step-body">
                 <div class="step-title">Скопіюйте готовий образ на флешку</div>
                 <p>
-                    Залишається перекинути готовий ISO-файл на флешку з Ventoy (крок 2) — просто перетягуванням,
+                    Залишається перекинути готовий ISO-файл на флешку з Ventoy (крок 5) — просто перетягуванням,
                     як звичайний файл, без будь-якого повторного форматування. Під час завантаження з флешки
                     Ventoy покаже меню вибору образу: обираєте потрібний ISO — і встановлення Windows проходить
-                    вже майже без вашої участі, за налаштованим на кроці 3 сценарієм.
+                    вже майже без вашої участі, за налаштованим на кроці 2 сценарієм.
                 </p>
             </div>
         </div>
 
-        <div class="section">
-            <div class="section-title">Що ви отримаєте в результаті</div>
-            <ul class="feature-list">
-                <li>Установку без зайвих ручних кліків — майстер Windows проходить по заготовленому сценарію</li>
-                <li>Готовий локальний обліковий запис адміністратора одразу після першого входу</li>
-                <li>Вимкнену телеметрію, SmartScreen та інші фонові «стеження» системи</li>
-                <li>Видалені непотрібні вбудовані застосунки та чистий робочий стіл</li>
-                <li>Свої шпалери та темну тему одразу після завершення установки</li>
-                <li>Ярлик Software Installer на робочому столі — для швидкого встановлення решти потрібних програм</li>
-            </ul>
-        </div>
-
-        <div id="footer-placeholder"></div>
-
-    </div>
-
-    <script src="../../js/footer.js"></script>
+<script src="../../js/footer.js"></script>
 
 </body>
 </html>
