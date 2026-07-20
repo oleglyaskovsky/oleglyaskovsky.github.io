@@ -102,7 +102,7 @@
                 <div class="step-title">Підготуйте додаткові файли: шпалери та Software Installer</div>
                 <p>
                     Перед тим як об'єднати все в один ISO-образ, потрібно підготувати таку структуру папок і файлів
-                    у себе на комп'ютері — назвемо цю кореневу папку <strong style="color:#fff;">Windows_ISO_Update</strong>.
+                    у себе на комп'ютері — назвемо цю папку <strong style="color:#fff;">Windows_ISO_Update</strong>.
                     Вона повторює структуру системних папок Windows, тому все, що в ній лежить, після установки
                     автоматично опиниться у потрібному місці на диску:
                 </p>
@@ -130,8 +130,8 @@ sources/
                 </p>
                 <div class="step-links">
                     <a href="https://oleglyaskovsky.github.io/pages/apps/software-installer.html" class="step-link" target="_blank" rel="noopener noreferrer">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                        Про Software Installer
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Завантажити Software Installer
                     </a>
                 </div>
             </div>
@@ -142,8 +142,7 @@ sources/
             <div class="step-body">
                 <div class="step-title">Об'єднайте все в один ISO-образ (AnyBurn)</div>
                 <p>
-                    Тепер потрібно «вшити» файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
-                    та вміст папки <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">Windows_ISO_Update</code>
+                    Тепер потрібно «вшити» вміст папки <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">Windows_ISO_Update</code>
                     у завантажений на кроці 1 образ Windows. Для цього я користуюсь безкоштовною портативною
                     програмою AnyBurn: у ній є режим редагування ISO-образу, який дозволяє додати
                     <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
