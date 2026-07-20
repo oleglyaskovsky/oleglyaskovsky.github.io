@@ -101,28 +101,23 @@
             <div class="step-body">
                 <div class="step-title">Підготуйте додаткові файли: шпалери та Software Installer</div>
                 <p>
-                    Крім автовідповідей, у мене є ще одна папка — <strong style="color:#fff;">Windows_ISO_Update</strong>,
-                    яку я також додаю в образ. Вона повторює структуру системних папок Windows, тому все, що
-                    в ній лежить, після установки автоматично опиняється у потрібному місці на диску:
+                    Перед тим як об'єднати все в один ISO-образ, потрібно підготувати таку структуру папок і файлів
+                    у себе на комп'ютері — назвемо цю кореневу папку <strong style="color:#fff;">Windows_ISO_Update</strong>.
+                    Вона повторює структуру системних папок Windows, тому все, що в ній лежить, після установки
+                    автоматично опиниться у потрібному місці на диску:
                 </p>
-                <div class="file-tree">sources/
+                <div class="file-tree">autounattend.xml   <span class="comment">← файл з кроку 2, кладемо поруч із sources/</span>
+sources/
 └── $OEM$/
     ├── $$/
     │   └── Web/
     │       └── Wallpaper/
-    │           └── MyWallpaper.jpg   <span class="comment">← шпалери, що встановляться одразу після установки</span>
+    │           └── MyWallpaper.jpg   <span class="comment">← покладіть сюди зображення з такою самою назвою — і воно стане шпалерами одразу після установки</span>
     └── $1/
         └── Users/
             └── Public/
                 └── Desktop/
-                    └── Software Installer.exe   <span class="comment">← ярлик на робочому столі</span></div>
-                <div class="note-box">
-                    <strong>Порада.</strong> Це не готовий архів для скачування — просто відтворіть таку структуру
-                    порожніх папок у себе і покладіть у неї свою актуальну версію
-                    <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">Software Installer.exe</code>
-                    та власні шпалери. Файл <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">autounattend.xml</code>
-                    (крок 2) сюди не входить — його додаємо окремо в корінь ISO-образу на кроці 4.
-                </div>
+                    └── Software Installer.exe   <span class="comment">← завантажте актуальну версію за посиланням нижче і покладіть сюди</span></div>
                 <p>
                     <code style="color:var(--text); background:var(--bg-card-hover); padding:1px 5px; border-radius:4px;">$$</code>
                     у Windows OEM-розгортанні означає системну папку Windows, а
