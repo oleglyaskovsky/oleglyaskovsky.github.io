@@ -1,5 +1,5 @@
 /* ============================================================
-   footer.js — Спільний підвал (disclaimer) для всіх сторінок.
+   footer.js - Спільний підвал (disclaimer) для всіх сторінок.
    ============================================================ */
 (function () {
     var placeholder = document.getElementById('footer-placeholder');
