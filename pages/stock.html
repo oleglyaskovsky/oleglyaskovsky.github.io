@@ -95,7 +95,7 @@ function report(ci){
     const parts=[];
     SIZES.forEach(([l,n],si)=>{
       const v=get(k(ci,col,si));
-      if(v)parts.push(`${l} (${n})`+(v>1?` ×${v}`:""));
+      if(v)parts.push(l+(v>1?` ×${v}`:""));
     });
     if(parts.length)lines.push(`- ${COLORS[col][0]}: ${parts.join(", ")}`);
   });
