@@ -23,17 +23,17 @@ button:active{transform:scale(.97)}
 .primary:hover{background:var(--accent-hover)}
 .cat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 10px;margin-top:14px}
 .cat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
-.cat-head h2{font-size:1.05rem;color:#fff}
+.cat-head h2{font-size:1rem;color:#fff}
 .cat-head button{padding:6px 10px;font-size:.8rem}
 .color-name{display:flex;align-items:center;gap:7px;font-size:.85rem;color:var(--text-dim);margin:10px 0 4px}
 .dot{width:12px;height:12px;border-radius:50%;border:1px solid #ffffff55}
-.sizes{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.sizes{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
 .sz{position:relative;padding:6px 0 5px;border-radius:8px;background:var(--bg-dark);border:1px solid var(--border);color:var(--text-muted);text-align:center;line-height:1.15;min-width:0}
-.sz b{display:block;font-size:.9rem;font-weight:700}
-.sz small{display:block;font-size:.7rem}
+.sz b{display:block;font-size:.78rem;font-weight:700}
+.sz small{display:block;font-size:.68rem}
 .sz.on{background:#4361ee2e;border-color:var(--accent);color:#fff}
 .sz.on small{color:var(--text-dim)}
-.badge{position:absolute;top:-7px;right:-4px;min-width:19px;height:19px;border-radius:10px;background:var(--success);color:#0f0f1a;font-size:.72rem;font-weight:700;line-height:19px;padding:0 4px}
+.badge{position:absolute;top:-7px;right:-3px;min-width:19px;height:19px;border-radius:10px;background:var(--success);color:#0f0f1a;font-size:.72rem;font-weight:700;line-height:19px;padding:0 4px}
 .minus .sz{border-color:#ef476f66}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--success);color:#0f0f1a;padding:9px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
 #toast.show{opacity:1}
@@ -53,17 +53,25 @@ button:active{transform:scale(.97)}
 </div>
 <div id="toast"></div>
 <script>
-const SIZES=[["S",46],["M",48],["L",50],["XL",52],["XXL",54],["3XL",56],["4XL",58]];
+const SIZES=[["XS",44],["S",46],["M",48],["L",50],["XL",52],["XXL",54],["3XL",56],["4XL",58],["5XL",60]];
 const COLORS=[["чорні","#111"],["сині","#1d3d8f"],["олив","#6b6b2f"],["койот","#a07c4e"],["піксель","#8a8a5c"],["мультикам","#7d6b4a"],["білі","#f2f2f2"]];
+const C6=[0,1,2,3,4,5],C7=[0,1,2,3,4,5,6];
 const CATS=[
-["Куртки Softshell",[0,1,2,3,4,5]],
-["Штани Softshell",[0,1,2,3,4,5]],
-["Кофти флісові",[0,1,2,3,4,5]],
-["Футболки поло",[0,1,2,3,4,5,6]],
-["Футболки поло (котон)",[0,1,2,3,4,5,6]],
-["Футболки",[0,1,2,3,4,5]],
-["Штани ripstop",[0,1,2,3,4,5]]];
-const KEY="stockData_v1";
+["Футболки котон",C7],
+["Футболки поліестер",C7],
+["Футболки поло котон",C7],
+["Футболки поло поліестер",C7],
+["Бойова сорочка UBACS (короткий рукав)",C6],
+["Бойова сорочка UBACS (довгий рукав)",C6],
+["Кофти флісові",C6],
+["Кофти флісові з вставками з плащової тканини",C6],
+["Кітєлі",C6],
+["Куртки SoftShell",C6],
+["Бушлати",C6],
+["Штани поплін",C6],
+["Штани Ripstop",C6],
+["Штани SoftShell",C6]];
+const KEY="stockData_v2";
 let data={},hist=[],minus=false;
 try{data=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}};
