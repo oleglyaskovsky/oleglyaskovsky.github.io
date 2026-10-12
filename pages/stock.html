@@ -28,6 +28,10 @@ button:active{transform:scale(.97)}
 .color-name{display:flex;align-items:center;gap:7px;font-size:.85rem;color:var(--text-dim);margin:10px 0 4px}
 .dot{width:12px;height:12px;border-radius:50%;border:1px solid #ffffff55}
 .sizes{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.sizes.wide{grid-template-columns:repeat(7,1fr);gap:6px 3px}
+.name-input{flex:1;min-width:0;font:inherit;font-size:1rem;font-weight:600;color:#fff;background:var(--bg-dark);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.name-input:focus{outline:none;border-color:var(--accent)}
+.name-input::placeholder{color:var(--text-muted);font-weight:400}
 .sz{position:relative;padding:6px 0 5px;border-radius:8px;background:var(--bg-dark);border:1px solid var(--border);color:var(--text-muted);text-align:center;line-height:1.15;min-width:0}
 .sz b{display:block;font-size:.78rem;font-weight:700}
 .sz small{display:block;font-size:.68rem}
@@ -53,40 +57,47 @@ button:active{transform:scale(.97)}
 </div>
 <div id="toast"></div>
 <script>
-const SIZES=[["XS",44],["S",46],["M",48],["L",50],["XL",52],["XXL",54],["3XL",56],["4XL",58],["5XL",60]];
+const SIZES=[["XS",44],["S",46],["M",48],["L",50],["XL",52],["XXL",54],["3XL",56],["4XL",58],["5XL",60],["6XL",62],["7XL",64],["8XL",66],["9XL",68],["10XL",70]];
+const S9=9,S14=14;
 const COLORS=[["чорні","#111"],["сині","#1d3d8f"],["олив","#6b6b2f"],["койот","#a07c4e"],["піксель","#8a8a5c"],["мультикам","#7d6b4a"],["білі","#f2f2f2"]];
 const C6=[0,1,2,3,4,5],C7=[0,1,2,3,4,5,6];
+const CUSTOM_PLACEHOLDER="Назва категорії";
 const CATS=[
-["Футболки котон",C7],
-["Футболки поліестер",C7],
-["Футболки поло котон",C7],
-["Футболки поло поліестер",C7],
-["Бойова сорочка UBACS (короткий рукав)",C6],
-["Бойова сорочка UBACS (довгий рукав)",C6],
-["Кофти флісові",C6],
-["Кофти флісові з вставками з плащової тканини",C6],
-["Кітєлі",C6],
-["Куртки SoftShell",C6],
-["Бушлати",C6],
-["Штани поплін",C6],
-["Штани Ripstop",C6],
-["Штани SoftShell",C6]];
+["Футболки котон",C7,S9],
+["Футболки поліестер",C7,S9],
+["Футболки поло котон",C7,S9],
+["Футболки поло поліестер",C7,S9],
+["Бойова сорочка UBACS (короткий рукав)",C6,S9],
+["Бойова сорочка UBACS (довгий рукав)",C6,S9],
+["Кофти флісові",C6,S9],
+["Кофти флісові з вставками з плащової тканини",C6,S9],
+["Кітєлі",C6,S9],
+["Куртки SoftShell",C6,S9],
+["Бушлати",C6,S9],
+["Штани поплін",C6,S14],
+["Штани Ripstop",C6,S14],
+["Штани SoftShell",C6,S14],
+[null,C7,S14]];
 const KEY="stockData_v2";
-let data={},hist=[],minus=false;
+let data={},hist=[],minus=false,customName=localStorage.getItem(KEY+"_name")||"";
+const CUSTOM=CATS.length-1;
 try{data=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const saveName=()=>{try{localStorage.setItem(KEY+"_name",customName)}catch(e){}};
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}};
 const k=(c,col,s)=>c+"|"+col+"|"+s;
 const get=key=>data[key]||0;
+const catName=ci=>ci===CUSTOM?(customName.trim()||"Своя категорія"):CATS[ci][0];
+const esc=t=>t.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 
 function render(){
   const app=document.getElementById("app");
   app.className=minus?"minus":"";
-  app.innerHTML=CATS.map(([name,cols],ci)=>`
+  app.innerHTML=CATS.map(([name,cols,n],ci)=>`
   <section class="cat">
-    <div class="cat-head"><h2>${name}</h2><button data-copy="${ci}">Копіювати</button></div>
+    <div class="cat-head">${ci===CUSTOM?`<input class="name-input" id="customName" maxlength="60" placeholder="${CUSTOM_PLACEHOLDER}" value="${esc(customName)}">`:`<h2>${name}</h2>`}<button data-copy="${ci}">Копіювати</button></div>
     ${cols.map(col=>`
       <div class="color-name"><span class="dot" style="background:${COLORS[col][1]}"></span>${COLORS[col][0]}</div>
-      <div class="sizes">${SIZES.map(([l,n],si)=>{
+      <div class="sizes${n>9?" wide":""}">${SIZES.slice(0,n).map(([l,n],si)=>{
         const v=get(k(ci,col,si));
         return `<div class="sz${v?" on":""}" data-k="${k(ci,col,si)}"><b>${l}</b><small>${n}</small>${v?`<span class="badge">${v}</span>`:""}</div>`}).join("")}
       </div>`).join("")}
@@ -97,11 +108,11 @@ function render(){
 }
 
 function report(ci){
-  const [name,cols]=CATS[ci];
+  const [,cols,n]=CATS[ci],name=catName(ci);
   const lines=[];
   cols.forEach(col=>{
     const parts=[];
-    SIZES.forEach(([l,n],si)=>{
+    SIZES.slice(0,n).forEach(([l],si)=>{
       const v=get(k(ci,col,si));
       if(v)parts.push(l+(v>1?` ×${v}`:""));
     });
@@ -136,6 +147,9 @@ document.getElementById("app").addEventListener("click",e=>{
   }
   const b=e.target.closest("[data-copy]");
   if(b)copy(report(+b.dataset.copy));
+});
+document.getElementById("app").addEventListener("input",e=>{
+  if(e.target.id==="customName"){customName=e.target.value;saveName()}
 });
 document.getElementById("mode").onclick=()=>{minus=!minus;render()};
 document.getElementById("undo").onclick=()=>{
