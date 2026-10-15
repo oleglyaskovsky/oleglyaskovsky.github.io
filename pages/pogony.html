@@ -5,42 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Наявність погонів | Олег Лясковський</title>
 <style>
-:root{--bg-dark:#141619;--bg-card:#1c1f25;--bg-card-hover:#242830;--accent:#4361ee;--accent-hover:#3a56d4;--success:#06d6a0;--danger:#ef476f;--text:#e6e8ee;--text-dim:#8b909c;--text-muted:#5a5f6c;--border:#2a2e37}
+:root{--bg-dark:#0d1117;--bg-card:#161b22;--bg-card-hover:#1c2128;--btn:#21262d;--btn-hover:#30363d;--accent:#2f81f7;--accent-emph:#1f6feb;--accent-subtle:#388bfd26;--success:#3fb950;--success-emph:#238636;--success-hover:#2ea043;--danger:#f85149;--danger-emph:#da3633;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#7d8590;--border:#30363d}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,Helvetica,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.5;padding:0 10px 60px}
 .container{max-width:900px;margin:0 auto}
-.back-btn{display:inline-block;margin:14px 0 8px;color:var(--text-dim);text-decoration:none;font-size:.95rem}
-.back-btn:hover{color:var(--accent)}
-h1{font-size:1.4rem;color:#fff;margin-bottom:10px}
+.back-btn{display:inline-block;margin:14px 0 8px;color:var(--accent);text-decoration:none;font-size:.95rem}
+.back-btn:hover{text-decoration:underline}
+h1{font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:10px}
 .bar{position:sticky;top:0;z-index:5;background:var(--bg-dark);padding:8px 0 10px;border-bottom:1px solid var(--border)}
 .row{display:flex;gap:6px;flex-wrap:wrap}
-button{font:inherit;cursor:pointer;border:1px solid var(--border);background:#262a32;color:var(--text);border-radius:8px;padding:9px 12px;font-size:.88rem;transition:background .2s,border-color .2s}
-button:hover{background:#30353f}
+button{font:inherit;cursor:pointer;border:1px solid #f0f6fc1a;background:var(--btn);color:var(--text);border-radius:6px;padding:9px 12px;font-size:.88rem;font-weight:600;transition:background .15s,border-color .15s}
+button:hover{background:var(--btn-hover);border-color:#8b949e}
 button:active{transform:scale(.97)}
 .grow{flex:1}
-#mode{min-width:88px;background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-#mode:hover{background:var(--accent-hover)}
-#mode.minus{background:var(--danger);border-color:var(--danger);color:#fff}
-.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.primary:hover{background:var(--accent-hover)}
-#reset:hover{background:#3a1d25;border-color:var(--danger);color:#ff8a99}
-.cat{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;margin-top:14px;box-shadow:0 2px 10px #0006}
+#mode{min-width:88px;background:var(--accent-emph);border-color:#f0f6fc1a;color:#fff}
+#mode:hover{background:#388bfd;border-color:#f0f6fc1a}
+#mode.minus{background:var(--danger-emph);color:#fff}
+#mode.minus:hover{background:#f85149}
+.primary{background:var(--success-emph);border-color:#f0f6fc1a;color:#fff}
+.primary:hover{background:var(--success-hover);border-color:#f0f6fc1a}
+#reset{color:var(--danger)}
+#reset:hover{background:var(--danger-emph);border-color:#f0f6fc1a;color:#fff}
+.cat{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:12px 10px;margin-top:14px}
 .cat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.cat-head h2{font-size:1.1rem;color:#fff}
+.cat-head h2{font-size:1.1rem;font-weight:600;color:var(--text)}
 .cat-head .tot{font-size:.8rem;color:var(--success);font-weight:600;margin-left:6px}
-.cat-head button{padding:6px 10px;font-size:.78rem}
+.cat-head button{padding:5px 10px;font-size:.78rem}
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-@media(max-width:559px){.grid{gap:6px}.cell{padding:6px 2px 5px;border-radius:8px}.cell small{font-size:.6rem}.badge{min-width:18px;height:18px;line-height:18px;font-size:.7rem;padding:0 4px}}
-.cell{position:relative;cursor:pointer;background:#16181d;border:1px solid var(--border);border-radius:10px;padding:7px 4px 6px;text-align:center;min-width:0;transition:background .15s,border-color .15s}
-.cell:hover{background:#1e2127}
+@media(max-width:559px){.grid{gap:6px}.cell{padding:6px 2px 5px}.cell small{font-size:.6rem}.badge{min-width:18px;height:18px;line-height:18px;font-size:.7rem;padding:0 4px}}
+.cell{position:relative;cursor:pointer;background:var(--bg-dark);border:1px solid var(--border);border-radius:6px;padding:7px 4px 6px;text-align:center;min-width:0;transition:background .15s,border-color .15s}
+.cell:hover{background:var(--bg-card-hover)}
 .cell svg{display:block;width:100%;max-width:74px;height:auto;margin:0 auto}
 .cell small{display:block;margin-top:5px;font-size:.68rem;line-height:1.2;color:var(--text-dim);overflow-wrap:anywhere}
-.cell.on{background:#4361ee2e;border-color:var(--accent)}
-.cell.on small{color:#fff}
-.badge{position:absolute;top:-7px;right:-3px;min-width:21px;height:21px;border-radius:11px;background:var(--success);color:#141619;font-size:.78rem;font-weight:700;line-height:21px;padding:0 5px}
-.minus .cell{border-color:#ef476f66}
+.cell.on{background:var(--accent-subtle);border-color:#388bfd}
+.cell.on small{color:var(--text)}
+.badge{position:absolute;top:-7px;right:-3px;min-width:21px;height:21px;border-radius:11px;background:var(--success);color:var(--bg-dark);font-size:.78rem;font-weight:700;line-height:21px;padding:0 5px}
+.minus .cell{border-color:#f8514966}
 .empty{margin-top:30px;text-align:center;color:var(--text-dim)}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--success);color:#141619;padding:9px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--success);color:var(--bg-dark);padding:9px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
 #toast.show{opacity:1}
 </style>
 </head>
