@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наявність погонів | Олег Лясковський</title>
+<style>
+:root{--bg-dark:#0d1117;--bg-card:#161b22;--bg-card-hover:#1c2128;--btn:#21262d;--btn-hover:#30363d;--accent:#2f81f7;--accent-emph:#1f6feb;--accent-subtle:#388bfd26;--success:#3fb950;--success-emph:#238636;--success-hover:#2ea043;--danger:#f85149;--danger-emph:#da3633;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#7d8590;--border:#30363d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.5;padding:0 10px 60px}
+.container{max-width:900px;margin:0 auto}
+.back-btn{display:inline-block;margin:14px 0 8px;color:var(--accent);text-decoration:none;font-size:.95rem}
+.back-btn:hover{text-decoration:underline}
+h1{font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg-dark);padding:8px 0 10px;border-bottom:1px solid var(--border)}
+.row{display:flex;gap:6px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border:1px solid #f0f6fc1a;background:var(--btn);color:var(--text);border-radius:6px;padding:9px 12px;font-size:.88rem;font-weight:600;transition:background .15s,border-color .15s}
+button:hover{background:var(--btn-hover);border-color:#8b949e}
+button:active{transform:scale(.97)}
+.grow{flex:1}
+#mode{min-width:88px;background:var(--accent-emph);border-color:#f0f6fc1a;color:#fff}
+#mode:hover{background:#388bfd;border-color:#f0f6fc1a}
+#mode.minus{background:var(--danger-emph);color:#fff}
+#mode.minus:hover{background:#f85149}
+.primary{background:var(--success-emph);border-color:#f0f6fc1a;color:#fff}
+.primary:hover{background:var(--success-hover);border-color:#f0f6fc1a}
+#reset{color:var(--danger)}
+#reset:hover{background:var(--danger-emph);border-color:#f0f6fc1a;color:#fff}
+.cat{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:12px 10px;margin-top:14px}
+.cat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cat-head h2{font-size:1.1rem;font-weight:600;color:var(--text)}
+.cat-head .tot{font-size:.8rem;color:var(--success);font-weight:600;margin-left:6px}
+.cat-head button{padding:5px 10px;font-size:.78rem}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:559px){.grid{gap:6px}.cell{padding:6px 2px 5px}.cell small{font-size:.6rem}.badge{min-width:18px;height:18px;line-height:18px;font-size:.7rem;padding:0 4px}}
+.cell{position:relative;cursor:pointer;background:var(--bg-dark);border:1px solid var(--border);border-radius:6px;padding:7px 4px 6px;text-align:center;min-width:0;transition:background .15s,border-color .15s}
+.cell:hover{background:var(--bg-card-hover)}
+.cell svg{display:block;width:100%;max-width:74px;height:auto;margin:0 auto}
+.cell small{display:block;margin-top:5px;font-size:.68rem;line-height:1.2;color:var(--text-dim);overflow-wrap:anywhere}
+.cell.on{background:var(--accent-subtle);border-color:#388bfd}
+.cell.on small{color:var(--text)}
+.badge{position:absolute;top:-7px;right:-3px;min-width:21px;height:21px;border-radius:11px;background:var(--success);color:var(--bg-dark);font-size:.78rem;font-weight:700;line-height:21px;padding:0 5px}
+.minus .cell{border-color:#f8514966}
+.empty{margin-top:30px;text-align:center;color:var(--text-dim)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--success);color:var(--bg-dark);padding:9px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs></svg>
+<div class="container">
+<a href="../index.html" class="back-btn">← Головна</a>
+<h1>Наявність погонів</h1>
+<div class="bar">
+  <div class="row">
+    <button id="mode">＋ Додаю</button>
+    <button id="undo" aria-label="Скасувати" title="Скасувати">↶</button>
+    <button id="copyAll" class="primary grow">Копіювати все</button>
+    <button id="reset">Очистити</button>
+  </div>
+</div>
+<div id="app"></div>
+</div>
+<div id="toast"></div>
+<script>
+/* Фони погонів (порядок як на стенді зліва направо) */
+const BG=[["мультикам","mc"],["хижак","vr"],["піксель","px"],["олив","ol"]];
+
+/* Звання від найпростішого до старшого.
+   c: шеврони зверху вниз ('t' — звичайний, 'w' — широкий), a: дуга внизу,
+   s: кількість зірочок, b: плетена смужка внизу.
+   Генеральські звання поки не додані — їх не було на фото. */
+const RANKS=[
+{n:"Солдат / Рекрут",t:"Рядовий склад",g:"r",d:"Порожній погон, без знаків",c:[]},
+{n:"Старший солдат",t:"Рядовий склад",g:"r",d:"1 шеврон",c:["t"]},
+{n:"Молодший сержант",t:"Молодший сержантський склад",g:"s",d:"2 шеврони",c:["t","t"]},
+{n:"Сержант",t:"Молодший сержантський склад",g:"s",d:"3 шеврони",c:["t","t","t"]},
+{n:"Старший сержант",t:"Старший сержантський склад",g:"s",d:"4 шеврони",c:["t","t","t","t"]},
+{n:"Головний сержант",t:"Старший сержантський склад",g:"s",d:"4 шеврони і дуга внизу",c:["t","t","t","t"],a:1},
+{n:"Штаб-сержант",t:"Старший сержантський склад",g:"s",d:"1 широкий шеврон і дуга внизу",c:["w"],a:1},
+{n:"Майстер-сержант",t:"Вищий сержантський склад",g:"s",d:"1 шеврон, 1 широкий і дуга внизу",c:["t","w"],a:1},
+{n:"Старший майстер-сержант",t:"Вищий сержантський склад",g:"s",d:"2 шеврони, 1 широкий і дуга внизу",c:["t","t","w"],a:1},
+{n:"Головний майстер-сержант",t:"Вищий сержантський склад",g:"s",d:"3 шеврони, 1 широкий і дуга внизу",c:["t","t","t","w"],a:1},
+{n:"Молодший лейтенант",t:"Молодший офіцерський склад",g:"o",d:"1 зірочка",c:[],s:1},
+{n:"Лейтенант",t:"Молодший офіцерський склад",g:"o",d:"2 зірочки",c:[],s:2},
+{n:"Старший лейтенант",t:"Молодший офіцерський склад",g:"o",d:"3 зірочки",c:[],s:3},
+{n:"Капітан",t:"Молодший офіцерський склад",g:"o",d:"4 зірочки",c:[],s:4},
+{n:"Майор",t:"Старший офіцерський склад",g:"o",d:"1 зірочка і плетена смужка внизу",c:[],s:1,b:1},
+{n:"Підполковник",t:"Старший офіцерський склад",g:"o",d:"2 зірочки і плетена смужка внизу",c:[],s:2,b:1},
+{n:"Полковник",t:"Старший офіцерський склад",g:"o",d:"3 зірочки і плетена смужка внизу",c:[],s:3,b:1}
+];
+
+/* ---------- малювання фонів ---------- */
+function rng(seed){let s=seed>>>0;return()=>((s=(Math.imul(s,1664525)+1013904223)>>>0)/4294967296)}
+function pixelPat(id,base,pal,cell,seed){
+  const r=rng(seed),cols=Math.ceil(50/cell),rows=Math.ceil(100/cell),g=[];
+  let o=`<rect width="50" height="100" fill="${base}"/>`;
+  for(let y=0;y<rows;y++){g[y]=[];for(let x=0;x<cols;x++){
+    const p=r(),l=x?g[y][x-1]:null,u=y?g[y-1][x]:null;
+    let c;if(l!==null&&p<.38)c=l;else if(u!==null&&p<.7)c=u;else c=Math.floor(r()*pal.length);
+    g[y][x]=c;o+=`<rect x="${x*cell}" y="${y*cell}" width="${cell}" height="${cell}" fill="${pal[c]}"/>`}}
+  return `<pattern id="${id}" width="50" height="100" patternUnits="userSpaceOnUse">${o}</pattern>`;
+}
+function multicamPat(){
+  const r=rng(7),pal=["#b3a578","#5a5636","#493a2b","#968f63"];
+  let o=`<rect width="50" height="100" fill="#7d7b55"/>`;
+  for(let i=0;i<20;i++){
+    const cx=r()*50,cy=r()*100,rx=4+r()*9,ry=2.5+r()*6,rot=r()*180,c=pal[Math.floor(r()*pal.length)];
+    o+=`<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}" transform="rotate(${rot.toFixed(0)} ${cx.toFixed(1)} ${cy.toFixed(1)})" fill="${c}"/>`}
+  return `<pattern id="bg-mc" width="50" height="100" patternUnits="userSpaceOnUse">${o}</pattern>`;
+}
+function olivePat(){
+  let o=`<rect width="50" height="100" fill="#59652f"/>`;
+  for(let i=-100;i<50;i+=1.7)o+=`<path d="M${i.toFixed(1)},100 L${(i+100).toFixed(1)},0" stroke="#4e5a29" stroke-width=".5"/>`;
+  return `<pattern id="bg-ol" width="50" height="100" patternUnits="userSpaceOnUse">${o}</pattern>`;
+}
+const braid=`<pattern id="braid" width="3.2" height="5.5" patternUnits="userSpaceOnUse"><rect width="3.2" height="5.5" fill="#0e0e0e"/><path d="M0,5.5 L3.2,0" stroke="#3b3b3b" stroke-width=".8"/></pattern>`;
+document.getElementById("defs").innerHTML=
+  multicamPat()+
+  pixelPat("bg-vr","#6b7a3c",["#4f6b2e","#7a5a38","#cdb98a","#3f5a2a","#9b8454"],3.5,21)+
+  pixelPat("bg-px","#b8aa7a",["#b8aa7a","#8e8a5a","#d3c8a0","#a59d6c","#6f7249"],4.2,5)+
+  olivePat()+braid;
+
+/* ---------- малювання знаків ---------- */
+const TH={t:5,w:9},RISE=9,GAP=2;
+function chev(y,th){return `<path d="M6,${y+RISE} L25,${y} L44,${y+RISE} L44,${y+RISE+th} L25,${y+th} L6,${y+RISE+th} Z"/>`}
+function star(cx,cy,R,r){
+  const p=[];for(let i=0;i<16;i++){const a=(i*22.5-90)*Math.PI/180,k=i%2?r:R;p.push((cx+k*Math.cos(a)).toFixed(2)+","+(cy+k*Math.sin(a)).toFixed(2))}
+  return `<polygon points="${p.join(" ")}"/>`;
+}
+const INS=[];
+function ins(ri){
+  if(INS[ri])return INS[ri];
+  const r=RANKS[ri];let o="";
+  if(r.c.length){
+    const total=r.c.reduce((a,k)=>a+TH[k],0)+GAP*(r.c.length-1)+RISE;
+    let y=(r.a?66:80)-total;
+    r.c.forEach(k=>{o+=chev(y,TH[k]);y+=TH[k]+GAP});
+  }
+  if(r.a)o+=`<path d="M6,82 Q25,92 44,82 L44,87.5 Q25,97.5 6,87.5 Z"/>`;
+  if(r.s){
+    const bottom=r.b?72:79,step=14.5;
+    for(let i=0;i<r.s;i++){
+      const cy=bottom-(r.s-1-i)*step;
+      o+=star(25,cy,7.4,3.4)+`<polygon fill="#2c2c2c" stroke="none" points="${[0,1,2,3].map(j=>{const a=(j*90-90)*Math.PI/180;return (25+3.2*Math.cos(a)).toFixed(2)+","+(cy+3.2*Math.sin(a)).toFixed(2)}).join(" ")}"/>`;
+    }
+  }
+  o=`<g fill="#101010" stroke="#303030" stroke-width=".3">${o}</g>`;
+  if(r.b)o+=`<rect x="4" y="86.5" width="42" height="6" rx=".8" fill="url(#braid)"/>`;
+  return INS[ri]=o;
+}
+const PATCH={};
+function patch(ri,bi){
+  const k=ri+"|"+bi;
+  return PATCH[k]||(PATCH[k]=`<svg viewBox="0 0 50 100" role="img" aria-label="${RANKS[ri].n}, ${BG[bi][0]}"><rect width="50" height="100" rx="2.5" fill="url(#bg-${BG[bi][1]})"/><rect x="1.6" y="1.6" width="46.8" height="96.8" rx="1.4" fill="none" stroke="#e6dca8" stroke-opacity=".5" stroke-width=".7" stroke-dasharray="1.8 1.3"/>${ins(ri)}<rect width="50" height="100" rx="2.5" fill="none" stroke="#000" stroke-opacity=".5" stroke-width=".8"/></svg>`);
+}
+
+/* ---------- категорії (кольори погонів) ----------
+   Щоб додати нову категорію, достатньо додати рядок сюди. */
+const SECTIONS=[
+{id:"px",title:"Піксель",bg:2},
+{id:"vr",title:"Хижак",bg:1},
+{id:"mc",title:"Мультикам",bg:0},
+{id:"ol",title:"Олив",bg:3}
+];
+
+/* ---------- дані та екран ---------- */
+const KEY="insigniaStock_v2";
+let data={},hist=[],minus=false;
+try{data=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+/* перенесення старих відміток зі сторінки першої версії */
+try{
+  if(!Object.keys(data).length){
+    const old=JSON.parse(localStorage.getItem("insigniaStock_v1"))||{};
+    for(const k in old){const [ri,bi]=k.split("|"),s=SECTIONS.find(x=>x.bg==bi);if(s)data[s.id+"|"+ri]=old[k]}
+    if(Object.keys(data).length)localStorage.setItem(KEY,JSON.stringify(data));
+  }
+}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}};
+const get=k=>data[k]||0;
+
+function cell(s,i){
+  const r=RANKS[i],k=s.id+"|"+i,v=get(k);
+  return `<div class="cell${v?" on":""}" data-k="${k}" title="${r.d}">${patch(i,s.bg)}<small>${r.n}</small>${v?`<span class="badge">${v}</span>`:""}</div>`;
+}
+function render(){
+  const app=document.getElementById("app");
+  app.className=minus?"minus":"";
+  const html=SECTIONS.map(s=>{
+    const idx=RANKS.map((_,i)=>i);
+    const total=RANKS.reduce((a,_,i)=>a+get(s.id+"|"+i),0);
+    return `<section class="cat"><div class="cat-head"><h2>${s.title}${total?`<span class="tot">${total} шт</span>`:""}</h2><button data-copy="${s.id}">Копіювати</button></div><div class="grid">${idx.map(i=>cell(s,i)).join("")}</div></section>`;
+  }).join("");
+  app.innerHTML=html||`<p class="empty">Нічого не знайдено</p>`;
+  const m=document.getElementById("mode");
+  m.textContent=minus?"− Віднімаю":"＋ Додаю";
+  m.classList.toggle("minus",minus);
+}
+function report(s){
+  const lines=[];
+  RANKS.forEach((r,i)=>{const v=get(s.id+"|"+i);if(v)lines.push("- "+r.n+(v>1?` ×${v}`:""))});
+  return lines.length?`${s.title}:\n${lines.join("\n")}`:"";
+}
+function toast(t){
+  const el=document.getElementById("toast");
+  el.textContent=t;el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),1400);
+}
+async function copy(text){
+  if(!text){toast("Нічого копіювати");return}
+  try{await navigator.clipboard.writeText(text)}
+  catch(e){
+    const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();
+    try{document.execCommand("copy")}catch(_){}
+    t.remove();
+  }
+  toast("Скопійовано ✓");
+}
+
+document.getElementById("app").addEventListener("click",e=>{
+  const c=e.target.closest(".cell");
+  if(c){
+    const key=c.dataset.k,cur=get(key),d=minus?-1:1;
+    if(cur+d<0)return;
+    data[key]=cur+d;if(!data[key])delete data[key];
+    hist.push({key,d});save();render();return;
+  }
+  const b=e.target.closest("[data-copy]");
+  if(b)copy(report(SECTIONS.find(s=>s.id===b.dataset.copy)));
+});
+document.getElementById("mode").onclick=()=>{minus=!minus;render()};
+document.getElementById("undo").onclick=()=>{
+  const h=hist.pop();if(!h){toast("Нічого скасовувати");return}
+  data[h.key]=get(h.key)-h.d;if(data[h.key]<=0)delete data[h.key];
+  save();render();
+};
+document.getElementById("copyAll").onclick=()=>{
+  const parts=SECTIONS.map(report).filter(Boolean);
+  copy(parts.length?"Погони:\n\n"+parts.join("\n\n"):"");
+};
+document.getElementById("reset").onclick=()=>{
+  if(confirm("Очистити всі відмітки?")){data={};hist=[];save();render()}
+};
+render();
+</script>
+</body>
+</html>

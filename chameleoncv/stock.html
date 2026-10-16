@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наявність розмірів | Олег Лясковський</title>
+<style>
+:root{--bg-dark:#0d1117;--bg-card:#161b22;--bg-card-hover:#1c2128;--btn:#21262d;--btn-hover:#30363d;--accent:#2f81f7;--accent-emph:#1f6feb;--accent-subtle:#388bfd26;--success:#3fb950;--success-emph:#238636;--success-hover:#2ea043;--danger:#f85149;--danger-emph:#da3633;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#7d8590;--border:#30363d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.5;padding:0 10px 60px}
+.container{max-width:900px;margin:0 auto}
+.back-btn{display:inline-block;margin:14px 0 8px;color:var(--accent);text-decoration:none;font-size:.95rem}
+.back-btn:hover{text-decoration:underline}
+h1{font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg-dark);padding:8px 0 10px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border:1px solid #f0f6fc1a;background:var(--btn);color:var(--text);border-radius:6px;padding:9px 12px;font-size:.88rem;font-weight:600;transition:background .15s,border-color .15s}
+button:hover{background:var(--btn-hover);border-color:#8b949e}
+button:active{transform:scale(.97)}
+.bar .grow{flex:1}
+#mode{min-width:92px;background:var(--accent-emph);border-color:#f0f6fc1a;color:#fff}
+#mode:hover{background:#388bfd;border-color:#f0f6fc1a}
+#mode.minus{background:var(--danger-emph);color:#fff}
+#mode.minus:hover{background:#f85149}
+.primary{background:var(--success-emph);border-color:#f0f6fc1a;color:#fff}
+.primary:hover{background:var(--success-hover);border-color:#f0f6fc1a}
+#reset{color:var(--danger)}
+#reset:hover{background:var(--danger-emph);border-color:#f0f6fc1a;color:#fff}
+.cat{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:12px 10px;margin-top:14px}
+.cat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.cat-head h2{font-size:1rem;font-weight:600;color:var(--text)}
+.cat-head button{padding:5px 10px;font-size:.78rem}
+.color-name{display:flex;align-items:center;gap:7px;font-size:.85rem;color:var(--text-dim);margin:10px 0 4px}
+.dot{width:12px;height:12px;border-radius:50%;border:1px solid #f0f6fc33}
+.sizes{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.sizes.wide{grid-template-columns:repeat(7,1fr);gap:6px 3px}
+.name-input{flex:1;min-width:0;font:inherit;font-size:1rem;font-weight:600;color:var(--text);background:var(--bg-dark);border:1px solid var(--border);border-radius:6px;padding:7px 10px}
+.name-input:focus{outline:none;border-color:var(--accent-emph);box-shadow:0 0 0 3px #1f6feb4d}
+.name-input::placeholder{color:var(--text-muted);font-weight:400}
+.sz{position:relative;padding:6px 0 5px;border-radius:6px;background:var(--bg-dark);border:1px solid var(--border);color:var(--text-muted);text-align:center;line-height:1.15;min-width:0;cursor:pointer;transition:background .15s,border-color .15s}
+.sz:hover{background:var(--bg-card-hover)}
+.sz b{display:block;font-size:.78rem;font-weight:700}
+.sz small{display:block;font-size:.68rem}
+.sz.on{background:var(--accent-subtle);border-color:#388bfd;color:var(--text)}
+.sz.on small{color:var(--text-dim)}
+.badge{position:absolute;top:-7px;right:-3px;min-width:19px;height:19px;border-radius:10px;background:var(--success);color:var(--bg-dark);font-size:.72rem;font-weight:700;line-height:19px;padding:0 4px}
+.minus .sz{border-color:#f8514966}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--success);color:var(--bg-dark);padding:9px 18px;border-radius:20px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="../index.html" class="back-btn">← Головна</a>
+<h1>Наявність розмірів</h1>
+<div class="bar" id="bar">
+  <button id="mode">＋ Додаю</button>
+  <button id="undo">↶ Скасувати</button>
+  <button id="copyAll" class="primary grow">Копіювати все</button>
+  <button id="reset">Очистити</button>
+</div>
+<div id="app"></div>
+</div>
+<div id="toast"></div>
+<script>
+const SIZES=[["XS",44],["S",46],["M",48],["L",50],["XL",52],["XXL",54],["3XL",56],["4XL",58],["5XL",60],["6XL",62],["7XL",64],["8XL",66],["9XL",68],["10XL",70]];
+const S9=9,S14=14;
+const COLORS=[["чорні","#111"],["сині","#1d3d8f"],["олив","#6b6b2f"],["койот","#a07c4e"],["піксель","#8a8a5c"],["мультикам","#7d6b4a"],["білі","#f2f2f2"]];
+const C6=[0,1,2,3,4,5],C7=[0,1,2,3,4,5,6];
+const CUSTOM_PLACEHOLDER="Назва категорії";
+const CATS=[
+["Футболки котон",C7,S9],
+["Футболки поліестер",C7,S9],
+["Футболки поло котон",C7,S9],
+["Футболки поло поліестер",C7,S9],
+["Бойова сорочка UBACS (короткий рукав)",C6,S9],
+["Бойова сорочка UBACS (довгий рукав)",C6,S9],
+["Кофти флісові",C6,S9],
+["Кофти флісові з вставками з плащової тканини",C6,S9],
+["Кітєлі",C6,S9],
+["Куртки SoftShell",C6,S9],
+["Бушлати",C6,S9],
+["Штани поплін",C6,S14],
+["Штани Ripstop",C6,S14],
+["Штани SoftShell",C6,S14],
+[null,C7,S14]];
+const KEY="stockData_v2";
+let data={},hist=[],minus=false,customName=localStorage.getItem(KEY+"_name")||"";
+const CUSTOM=CATS.length-1;
+try{data=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+const saveName=()=>{try{localStorage.setItem(KEY+"_name",customName)}catch(e){}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}};
+const k=(c,col,s)=>c+"|"+col+"|"+s;
+const get=key=>data[key]||0;
+const catName=ci=>ci===CUSTOM?(customName.trim()||"Своя категорія"):CATS[ci][0];
+const esc=t=>t.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+
+function render(){
+  const app=document.getElementById("app");
+  app.className=minus?"minus":"";
+  app.innerHTML=CATS.map(([name,cols,n],ci)=>`
+  <section class="cat">
+    <div class="cat-head">${ci===CUSTOM?`<input class="name-input" id="customName" maxlength="60" placeholder="${CUSTOM_PLACEHOLDER}" value="${esc(customName)}">`:`<h2>${name}</h2>`}<button data-copy="${ci}">Копіювати</button></div>
+    ${cols.map(col=>`
+      <div class="color-name"><span class="dot" style="background:${COLORS[col][1]}"></span>${COLORS[col][0]}</div>
+      <div class="sizes${n>9?" wide":""}">${SIZES.slice(0,n).map(([l,n],si)=>{
+        const v=get(k(ci,col,si));
+        return `<div class="sz${v?" on":""}" data-k="${k(ci,col,si)}"><b>${l}</b><small>${n}</small>${v?`<span class="badge">${v}</span>`:""}</div>`}).join("")}
+      </div>`).join("")}
+  </section>`).join("");
+  const m=document.getElementById("mode");
+  m.textContent=minus?"− Віднімаю":"＋ Додаю";
+  m.classList.toggle("minus",minus);
+}
+
+function report(ci){
+  const [,cols,n]=CATS[ci],name=catName(ci);
+  const lines=[];
+  cols.forEach(col=>{
+    const parts=[];
+    SIZES.slice(0,n).forEach(([l],si)=>{
+      const v=get(k(ci,col,si));
+      if(v)parts.push(l+(v>1?` ×${v}`:""));
+    });
+    if(parts.length)lines.push(`- ${COLORS[col][0]}: ${parts.join(", ")}`);
+  });
+  return lines.length?`${name}:\n${lines.join("\n")}`:"";
+}
+
+function toast(t){
+  const el=document.getElementById("toast");
+  el.textContent=t;el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),1400);
+}
+async function copy(text){
+  if(!text){toast("Нічого копіювати");return}
+  try{await navigator.clipboard.writeText(text)}
+  catch(e){
+    const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();
+    try{document.execCommand("copy")}catch(_){}
+    t.remove();
+  }
+  toast("Скопійовано ✓");
+}
+
+document.getElementById("app").addEventListener("click",e=>{
+  const sz=e.target.closest(".sz");
+  if(sz){
+    const key=sz.dataset.k,cur=get(key),d=minus?-1:1;
+    if(cur+d<0)return;
+    data[key]=cur+d;if(!data[key])delete data[key];
+    hist.push({key,d});save();render();return;
+  }
+  const b=e.target.closest("[data-copy]");
+  if(b)copy(report(+b.dataset.copy));
+});
+document.getElementById("app").addEventListener("input",e=>{
+  if(e.target.id==="customName"){customName=e.target.value;saveName()}
+});
+document.getElementById("mode").onclick=()=>{minus=!minus;render()};
+document.getElementById("undo").onclick=()=>{
+  const h=hist.pop();if(!h){toast("Нічого скасовувати");return}
+  data[h.key]=get(h.key)-h.d;if(data[h.key]<=0)delete data[h.key];
+  save();render();
+};
+document.getElementById("copyAll").onclick=()=>
+  copy(CATS.map((_,i)=>report(i)).filter(Boolean).join("\n\n"));
+document.getElementById("reset").onclick=()=>{
+  if(confirm("Очистити всі відмітки?")){data={};hist=[];save();render()}
+};
+render();
+</script>
+</body>
+</html>
