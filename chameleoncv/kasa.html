@@ -27,6 +27,7 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .balances .val{font-size:1.3rem;font-weight:600;line-height:1.3}
 .bar{position:sticky;top:0;z-index:5;background:var(--bg-dark);padding:10px 0;margin-top:6px;display:flex;flex-wrap:wrap;gap:8px}
 .bar .grow{flex:1}
+@media(max-width:520px){.bar{display:grid;grid-template-columns:1fr 1fr;gap:6px}.bar .grow{display:none}.bar button{width:100%}}
 .main{display:grid;grid-template-columns:1fr;gap:12px;margin-top:4px}
 @media(min-width:760px){.main{grid-template-columns:3fr 2fr;align-items:start}}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0 10px}
@@ -74,6 +75,7 @@ button:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .change b{font-size:.95rem;font-weight:600;color:var(--success);line-height:1.2}
 .change b.bad{color:var(--danger);font-size:.8rem}
 #issue{width:100%;height:38px;font-size:.85rem}
+#issue:disabled{opacity:1;background:#14281b;border-color:#23863666;color:#8fd19e}
 dialog{margin:auto;background:var(--bg-card);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:18px;width:min(420px,94vw);max-height:92vh;overflow:auto}
 dialog::backdrop{background:#010409b3}
 dialog h2{font-size:1rem;margin-bottom:10px}
