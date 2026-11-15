@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>Олег Лясковський</title>
+    <link rel="stylesheet" href="style/main.css">
+    <script src="js/theme.js"></script>
+</head>
+<body class="home">
+
+    <div id="splash">
+        <div id="splash-logo" role="button" tabindex="0" aria-label="Олег Лясковський"></div>
+        <div class="splash-hint">натисніть на логотип</div>
+    </div>
+
+    <div id="page-content">
+
+    <header>
+        <div class="brand-name">
+            <span class="emoji-text">(◔⁠‿⁠◔⁠)</span>
+            <span class="name-text">Олег Лясковський</span>
+        </div>
+        <p>Власні розробки програм, поради та лайфхаки</p>
+    </header>
+
+    <main>
+        <div class="categories-grid">
+
+            <a href="pages/apps.html" class="category-card">
+                <div>
+                    <h2>Мої програми</h2>
+                    <p>Програми та інструменти власної розробки.</p>
+                </div>
+                <div class="card-action">Перейти до розділу →</div>
+            </a>
+
+            <a href="pages/windows.html" class="category-card">
+                <div>
+                    <h2>Мій Windows</h2>
+                    <p>Установка й налаштування Windows та програм.</p>
+                </div>
+                <div class="card-action">Перейти до розділу →</div>
+            </a>
+
+            <a href="pages/android.html" class="category-card">
+                <div>
+                    <h2>Мій Android</h2>
+                    <p>Додатки які я обрав для себе, їх установка та налаштування.</p>
+                </div>
+                <div class="card-action">Перейти до розділу →</div>
+            </a>
+
+            <a href="pages/tools.html" class="category-card">
+                <div>
+                    <h2>Мій інструмент</h2>
+                    <p>Рішення, які варто взяти на замітку.</p>
+                </div>
+                <div class="card-action">Перейти до розділу →</div>
+            </a>
+
+        </div>
+    </main>
+
+    </div><!-- /#page-content -->
+
+    <script>
+        (function () {
+            var splash = document.getElementById('splash');
+            var logo = document.getElementById('splash-logo');
+            var content = document.getElementById('page-content');
+            var opened = false;
+
+            function openPage() {
+                if (opened) return;
+                opened = true;
+
+                logo.classList.remove('pressed');
+                logo.classList.add('released');
+                content.classList.add('content-visible');
+
+                setTimeout(function () {
+                    splash.classList.add('splash-hidden');
+                }, 150);
+
+                setTimeout(function () {
+                    splash.style.display = 'none';
+                }, 650);
+            }
+
+            function handlePress(e) {
+                e.preventDefault();
+                logo.classList.add('pressed');
+            }
+
+            function handleRelease() {
+                if (!logo.classList.contains('pressed')) return;
+                // невелика пауза, щоб було видно натискання, перед підйомом і зникненням
+                setTimeout(openPage, 90);
+            }
+
+            logo.addEventListener('mousedown', handlePress);
+            logo.addEventListener('touchstart', handlePress, { passive: false });
+
+            logo.addEventListener('mouseup', handleRelease);
+            logo.addEventListener('touchend', handleRelease);
+
+            // якщо користувач «відпустив» курсор поза логотипом
+            logo.addEventListener('mouseleave', function () {
+                if (logo.classList.contains('pressed') && !opened) {
+                    logo.classList.remove('pressed');
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

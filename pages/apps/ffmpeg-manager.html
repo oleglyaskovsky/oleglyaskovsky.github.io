@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+    <title>FFmpeg Manager | Олег Лясковський</title>
+    <link rel="stylesheet" href="../../style/main.css">
+    <script src="../../js/theme.js"></script>
+</head>
+<body class="detail">
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="ffmpeg-manager.png" alt="FFmpeg Manager">
+            </div>
+            <div class="app-header-text">
+                <h1>FFmpeg Manager</h1>
+                <div class="app-subtitle">Інтеграція FFmpeg у контекстне меню Windows</div>
+            </div>
+            <a href="https://mega.nz/folder/3BlSnTSA#AspB4F_n-SxI_6IIADW1Ew" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                FFmpeg Manager - це графічний інтерфейс для інтеграції FFmpeg у контекстне меню Windows.
+                Замість того щоб кожного разу відкривати термінал і вручну вводити команди, достатньо клацнути правою
+                кнопкою миші на відео-, аудіофайлі або зображенні - і потрібна операція з'явиться прямо в меню Провідника.
+                Програма записує обрані команди до реєстру Windows (HKCU) і автоматично прив'язує їх до відповідних
+                типів файлів, після чого FFmpeg стає доступним у два кліки для будь-якого медіафайлу в системі.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Категорії команд</div>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-item-title">Відео</div>
+                    <div class="category-item-programs">Стиснення (H.264, H.265), обрізання, поворот, дзеркалення, зміна роздільної здатності (480p–4K), зміна FPS, прискорення/сповільнення, реверс, стабілізація, видалення метаданих</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Аудіо</div>
+                    <div class="category-item-programs">Витяг аудіодоріжки (MP3, WAV, FLAC, AAC), нормалізація гучності, зміна бітрейту, частоти дискретизації, конвертація між моно/стерео, видалення тиші, шумозаглушення, ефекти fade in/out</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Конвертація</div>
+                    <div class="category-item-programs">Конвертація між форматами: MP4, MKV, AVI, WebM, MOV, TS, MP3, WAV, FLAC, OGG, AAC, Opus, GIF, а також витяг першого кадру у PNG або JPG</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Зображення та кадри</div>
+                    <div class="category-item-programs">Створення GIF (звичайне та HQ), витяг кадрів (по 1/сек або всіх), мініатюра з відео, додавання водяного знаку, мозаїка прев'ю 4×4</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Фільтри</div>
+                    <div class="category-item-programs">Чорно-біле, сепія, вінтаж, негатив, яскравість, контраст, насиченість, розмиття, різкість, шумозаглушення, деінтерлейсинг, теплі/холодні відтінки, вінь'єтка, виявлення країв</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Субтитри</div>
+                    <div class="category-item-programs">Вшивання субтитрів у відео (hardcoded), додавання субтитрів як окремої доріжки (soft), витяг вбудованих субтитрів у файл SRT</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Інформація</div>
+                    <div class="category-item-programs">Детальна інформація про файл через ffprobe: кодеки, роздільна здатність, тривалість, бітрейт, метадані (теги)</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Стрімінг</div>
+                    <div class="category-item-programs">Розбиття відео на сегменти HLS для потокового відтворення, створення DASH маніфесту для адаптивного стрімінгу</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Інтеграція безпосередньо у Провідник Windows - команди FFmpeg доступні правою кнопкою миші на будь-якому медіафайлі</li>
+                <li>Більше 70 готових FFmpeg-команд, організованих у 8 категорій</li>
+                <li>Індикатор наявності FFmpeg - програма перевіряє встановлення при запуску та пропонує посилання на завантаження</li>
+                <li>Виконання команд у фоновому режимі з окремим вікном прогресу, живим виводом FFmpeg та кнопкою скасування</li>
+                <li>Команди з позначкою «📎 +файл» відкривають діалог вибору другого файлу</li>
+                <li>Команди з позначкою «⌨️ параметри» відкривають форму введення</li>
+                <li>Інформаційні команди (ℹ️) виводять результат роботи ffprobe у текстовому вікні</li>
+                <li>Кнопки «Вибрати все» та «Зняти все» для керування в межах кожної категорії</li>
+                <li>Записи реєстру вносяться лише до HKCU - без змін у системних гілках</li>
+                <li>Кнопка «Оновити Провідник» перезапускає explorer.exe для застосування змін</li>
+                <li>Підтримка ffmpeg.exe поруч із програмою як альтернатива системному PATH</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Розрядність</div>
+                    <div class="req-value">x64</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Не потрібні</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">FFmpeg</div>
+                    <div class="req-value">Потрібен окремо</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../../js/footer.js"></script>
+
+</body>
+</html>

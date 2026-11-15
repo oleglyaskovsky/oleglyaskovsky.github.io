@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+    <title>Media Downloader Manager | Олег Лясковський</title>
+    <link rel="stylesheet" href="../../style/main.css">
+    <script src="../../js/theme.js"></script>
+</head>
+<body class="detail">
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="media-downloader-manager.png" alt="Media Downloader Manager">
+            </div>
+            <div class="app-header-text">
+                <h1>Media Downloader Manager</h1>
+                <div class="app-subtitle">Завантаження відео й аудіо з інтернету на базі yt-dlp та FFmpeg</div>
+            </div>
+            <a href="https://mega.nz/folder/KYV3lJbQ#rrFn01QYEvbTE2r9QfKWIw" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                Media Downloader Manager - це менеджер для завантаження відео та аудіо з інтернету, побудований
+                на базі yt-dlp і FFmpeg. Достатньо вставити посилання (можна навіть автоматично з буфера обміну) —
+                і програма сама визначить, чи це окреме відео, чи цілий плейлист, завантажить його у вибраній якості
+                та збереже в потрібну папку. Крім повноцінного вікна програми, є режим швидкого виклику прямо з
+                контекстного меню провідника Windows: клік правою кнопкою миші в папці - і завантаження відео, аудіо
+                або уривку запускається без відкриття головного вікна.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Режими завантаження</div>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-item-title">Відео</div>
+                    <div class="category-item-programs">Повне відео у вибраній якості (Найкраща, 1080p, 720p, 480p, 360p), збірка в MP4</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Аудіо</div>
+                    <div class="category-item-programs">Витягування звукової доріжки та конвертація в MP3 (Найкраща, 320/192/128 kbps)</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Уривок відео</div>
+                    <div class="category-item-programs">Обрізка відео за вказаним часом початку й кінця (HH:MM:SS / MM:SS)</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Уривок аудіо</div>
+                    <div class="category-item-programs">Витягування аудіофрагмента з вказаного проміжку часу в MP3</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Контекстне меню</div>
+                    <div class="category-item-programs">Швидкий виклик усіх 4 режимів прямо з правого кліку в провіднику, з посиланням із буфера обміну</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Плейлисти</div>
+                    <div class="category-item-programs">Автоматичне розпізнавання YouTube-плейлистів проти окремих відео за структурою посилання</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Автоматична вставка URL з буфера обміну при запуску та кнопка ручного вставлення</li>
+                <li>Три варіанти збереження файлів: у папку «Завантаження», у поточну папку або у власну вказану теку</li>
+                <li>Вибір якості окремо для відео та для аудіо, з автоматичним фолбеком</li>
+                <li>Визначення типу посилання: окреме відео, youtu.be-посилання чи повноцінний плейлист</li>
+                <li>Реєстрація/видалення пунктів контекстного меню провідника через UAC</li>
+                <li>Прогрес-бар у реальному часі з відсотком, швидкістю завантаження та ETA</li>
+                <li>Перевірка версій yt-dlp та FFmpeg прямо у вікні програми та кнопка одноклікового оновлення yt-dlp</li>
+                <li>Компактне окреме віконце для режиму контекстного меню</li>
+                <li>Можливість скасувати активне завантаження в будь-який момент</li>
+                <li>Усі налаштування зберігаються в <code>settings.json</code></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Компоненти</div>
+                    <div class="req-value">yt-dlp.exe, ffmpeg.exe (у комплекті)</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Адміністратор</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Інтернет</div>
+                    <div class="req-value">Потрібен</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../../js/footer.js"></script>
+
+</body>
+</html>

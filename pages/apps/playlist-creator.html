@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+    <title>Playlist Creator | Олег Лясковський</title>
+    <link rel="stylesheet" href="../../style/main.css">
+    <script src="../../js/theme.js"></script>
+</head>
+<body class="detail">
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="playlist-creator.png" alt="Playlist Creator">
+            </div>
+            <div class="app-header-text">
+                <h1>Playlist Creator</h1>
+                <div class="app-subtitle">Автоматичне створення єдиного MP3-плейлиста з музики й реклами</div>
+            </div>
+            <a href="https://mega.nz/folder/zAUlFajA#y03wLKfF5i_k-gnwWSYqMw" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                Playlist Creator - це інструмент для автоматичного склеювання набору MP3-треків у один суцільний
+                аудіофайл-плейлист з вставками реклами між композиціями. Достатньо обрати папку з музикою та папку
+                з рекламними роликами, вибрати послідовний або випадковий порядок - і програма сама нормалізує
+                гучність, за потреби нарізає надто довгі треки на частини з рекламою всередині, та збирає все
+                в один MP3-файл через FFmpeg. Готовий результат можна закинути на флешку чи в плеєр.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Можливості обробки</div>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-item-title">Порядок треків</div>
+                    <div class="category-item-programs">Послідовний (за алфавітом) або випадковий (перемішування) режим плейлиста</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Вставка реклами</div>
+                    <div class="category-item-programs">Ролик з обраної папки додається після кожного треку по колу (round-robin)</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Довгі треки</div>
+                    <div class="category-item-programs">Нарізка треків, довших за задану межу, на сегменти з рекламою через кожні N хвилин</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Нормалізація звуку</div>
+                    <div class="category-item-programs">Вирівнювання гучності всіх треків і реклами за стандартом EBU R128 (loudnorm)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Обробка всього двома кліками: обрати папку з музикою, обрати папку з рекламою - і натиснути «Запустити обробку»</li>
+                <li>Перемикач режиму плейлиста: «Послідовний» або «Випадковий»</li>
+                <li>Опційна обробка довгих треків: можна задати тривалість і частоту вставки реклами</li>
+                <li>Нормалізація гучності EBU R128 (loudnorm, I=-16 LUFS)</li>
+                <li>Аналіз тривалості треків через FFprobe та нарізка сегментів через FFmpeg</li>
+                <li>Прогрес-бар з детальним статусом у реальному часі</li>
+                <li>Фінальний файл зберігається у папці з музикою під назвою <code>_Playlist_РРРР.ММ.ДД.mp3</code></li>
+                <li>Безпечна обробка імен файлів та автоматичне очищення тимчасових файлів</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Формат треків</div>
+                    <div class="req-value">MP3</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Компоненти</div>
+                    <div class="req-value">FFmpeg / FFprobe (у комплекті)</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Інтернет</div>
+                    <div class="req-value">Не потрібен</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../../js/footer.js"></script>
+
+</body>
+</html>

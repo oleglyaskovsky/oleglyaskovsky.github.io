@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Каса</title>
+<link rel="stylesheet" href="../style/main.css">
+<script src="../js/theme.js"></script>
+<script src="../js/migrate-keys.js" data-online-only></script>
+</head>
+<body class="work page-cash">
+<button type="button" id="offlineBtn" class="offline-toggle" data-online-only title="Завантажити офлайн-версію" aria-label="Завантажити офлайн-версію">↓</button>
+<div class="container">
+  <a href="index.html" class="back-btn" data-online-only>← Назад</a>
+  <h1>Продаж товару</h1>
+  <div class="balances">
+    <div class="card"><div class="lbl">Готівковий баланс</div><div class="val" id="balCash">0.00 ₴</div></div>
+    <div class="card"><div class="lbl">Безготівковий баланс (картка)</div><div class="val" id="balCard">0.00 ₴</div></div>
+  </div>
+  <div class="bar">
+    <span class="grow"></span>
+    <button id="xBtn">Х-звіт</button>
+    <button id="calcBtn">Калькулятор готівки</button>
+    <button id="histBtn">Історія чеків</button>
+    <button id="closeBtn" class="danger">Закрити зміну</button>
+  </div>
+
+  <div class="main">
+    <section class="card">
+      <h2>Новий товар</h2>
+      <div class="cats" id="cats"></div>
+      <div class="row">
+        <input class="name-input" id="price" type="text" inputmode="decimal" placeholder="Ціна, ₴" autocomplete="off">
+        <button class="blue" id="addBtn">Додати</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Чек</h2>
+      <div id="cart"></div>
+      <div class="dim mt-12 mb-6">Знижка на чек</div>
+      <div class="disc" id="disc"><button class="sz" data-d="0">0%</button><button class="sz" data-d="5">5%</button><button class="sz" data-d="10">10%</button><input class="name-input" id="custom" type="text" inputmode="decimal" placeholder="Інша, %" autocomplete="off"></div>
+      <div class="line" id="discLine" style="display:none"><span>Знижка</span><span id="discAmt"></span></div>
+      <div class="totals"><span>До сплати:</span><span id="total">0.00 ₴</span></div>
+      <div class="pay">
+        <button class="sz on" id="payCash">Готівка</button>
+        <button class="sz" id="payCard">Картка</button>
+      </div>
+      <div class="cash-box" id="cashBox">
+        <input class="name-input" id="given" type="text" inputmode="decimal" placeholder="Дав покупець, ₴" autocomplete="off">
+        <div class="change"><span class="dim">Решта</span><b id="change">0.00 ₴</b></div>
+      </div>
+      <button class="primary" id="issue" disabled>Видати чек</button>
+    </section>
+  </div>
+</div>
+
+<dialog id="xDlg">
+  <h2>Х-звіт</h2>
+  <div class="dim mb-6">Виручка</div>
+  <div class="line"><span>Готівка</span><span id="xCash"></span></div>
+  <div class="line"><span>Безготівка (картка)</span><span id="xCard"></span></div>
+  <div class="line total"><span>Всього</span><span id="xAll"></span></div>
+  <div class="actions"><button id="xOk">Закрити</button></div>
+</dialog>
+
+<dialog id="closeDlg">
+  <h2>Закрити зміну?</h2>
+  <p class="dim">Усі продажі та поточний чек будуть очищені, готівка поверне початкові 1000 ₴. Дію не можна скасувати.</p>
+  <div class="actions three"><button id="closeCopy" class="blue">Скопіювати звіт</button><button id="closeNo">Скасувати</button><button id="closeYes" class="danger">Закрити зміну</button></div>
+</dialog>
+
+<dialog id="rcDlg">
+  <h2 id="rcTitle">Чек</h2>
+  <div id="rcBody"></div>
+  <div class="actions"><button id="rcDel" class="danger" style="display:none">Скасувати чек</button><button id="rcOk">Закрити</button><button id="rcCopy" class="primary">Скопіювати чек</button></div>
+</dialog>
+
+<dialog id="histDlg">
+  <h2>Історія чеків</h2>
+  <div class="dim mb-8" id="histCount"></div>
+  <div id="histList"></div>
+  <div class="actions"><button id="histOk">Закрити</button></div>
+</dialog>
+
+<dialog id="calcDlg">
+  <h2>Калькулятор готівки</h2>
+  <div id="calcList"></div>
+  <div class="line total"><span>Всього</span><span id="calcTotal">0.00 ₴</span></div>
+  <div class="actions"><button id="calcReset">Скинути</button><button id="calcOk">Закрити</button></div>
+</dialog>
+
+<script src="../js/offline.js" data-online-only></script>
+<div id="toast"></div>
+
+<script>
+const FLOAT=1000, CATS=['Нижня білизна','Шкарпетки','Окуляри','Аксесуари'], KEY='cash_v1';
+let st={sales:[],cart:[],cat:null,pay:'cash',disc:0};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.sales)&&Array.isArray(s.cart))st=Object.assign(st,s)}catch(e){}
+const $=id=>document.getElementById(id);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const fmt=n=>n.toLocaleString('uk-UA',{minimumFractionDigits:2,maximumFractionDigits:2})+' ₴';
+const num=v=>{const n=parseFloat(String(v).replace(',','.'));return isFinite(n)&&n>0?Math.round(n*100)/100:0};
+const sub=()=>st.cart.reduce((s,i)=>s+i.price*i.qty,0);
+const total=()=>Math.round(sub()*(1-(st.disc||0)/100)*100)/100;
+const sum=m=>st.sales.filter(s=>s.pay===m).reduce((a,s)=>a+s.total,0);
+let tt;function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),1400)}
+
+function render(){
+  $('cats').innerHTML=CATS.map((c,i)=>`<button class="sz${(st.cat||CATS[0])===c?' on':''}" data-c="${i}">${c}</button>`).join('');
+  $('balCash').textContent=fmt(FLOAT+sum('cash'));
+  $('balCard').textContent=fmt(sum('card'));
+  $('cart').innerHTML=st.cart.length?st.cart.map((i,x)=>`<div class="item"><div class="nm"><b>${i.cat}</b><span class="dim">${fmt(i.price)}</span></div><div class="qty"><button data-m="${x}">−</button><span>${i.qty}</span><button data-p="${x}">＋</button></div><div class="sum">${fmt(i.price*i.qty)}</div></div>`).join(''):'<div class="empty">Чек поки що порожній</div>';
+  const t=total();$('total').textContent=fmt(t);
+  const d=st.disc||0,cu=$('custom').value.trim();
+  document.querySelectorAll('#disc [data-d]').forEach(b=>b.classList.toggle('on',!cu&&+b.dataset.d===d));
+  $('custom').style.borderColor=cu?'var(--accent-border)':'';
+  $('discLine').style.display=d?'flex':'none';$('discAmt').textContent=d+'%: −'+fmt(sub()-t);
+  $('payCash').classList.toggle('on',st.pay==='cash');
+  $('payCard').classList.toggle('on',st.pay==='card');
+  $('cashBox').style.display=st.pay==='cash'?'grid':'none';
+  const g=num($('given').value),ch=g-t;
+  const el=$('change');el.textContent=g?fmt(Math.max(ch,0)):fmt(0);
+  if(g&&ch<0){el.textContent='Не вистачає '+fmt(-ch);el.classList.add('bad')}else el.classList.remove('bad');
+  $('issue').disabled=!t||(st.pay==='cash'&&g<t);
+}
+function add(){
+  const cat=st.cat||CATS[0];
+  const p=num($('price').value);if(!p){toast('Введіть ціну');$('price').focus();return}
+  const f=st.cart.find(i=>i.cat===cat&&i.price===p);
+  f?f.qty++:st.cart.push({cat,price:p,qty:1});
+  $('price').value='';save();render();$('price').focus();
+}
+$('cats').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;st.cat=CATS[b.dataset.c];save();render();$('price').focus()};
+$('addBtn').onclick=add;
+$('price').onkeydown=e=>{if(e.key==='Enter')add()};
+$('given').oninput=render;
+$('disc').onclick=e=>{const b=e.target.closest('[data-d]');if(!b)return;st.disc=+b.dataset.d;$('custom').value='';save();render()};
+$('custom').oninput=()=>{const n=parseFloat($('custom').value.replace(',','.'));st.disc=isFinite(n)?Math.min(Math.max(n,0),99):0;save();render()};
+if(![0,5,10].includes(st.disc||0))$('custom').value=st.disc;
+$('cart').onclick=e=>{
+  const m=e.target.closest('[data-m]'),p=e.target.closest('[data-p]');
+  if(p)st.cart[p.dataset.p].qty++;
+  else if(m){const i=st.cart[m.dataset.m];if(--i.qty<=0)st.cart.splice(m.dataset.m,1)}
+  else return;
+  save();render();
+};
+$('payCash').onclick=()=>{st.pay='cash';save();render()};
+$('payCard').onclick=()=>{st.pay='card';save();render()};
+$('issue').onclick=()=>{
+  const t=total();if(!t)return;
+  const sale={n:(st.n=(st.n||0)+1),total:t,sub:sub(),disc:st.disc||0,pay:st.pay,items:st.cart,time:Date.now()};st.sales.push(sale);
+  const ch=st.pay==='cash'?num($('given').value)-t:0;
+  st.cart=[];st.disc=0;$('custom').value='';$('given').value='';save();render();
+  showReceipt(sale);
+};
+$('xBtn').onclick=()=>{const c=sum('cash'),d=sum('card');$('xCash').textContent=fmt(c);$('xCard').textContent=fmt(d);$('xAll').textContent=fmt(c+d);$('xDlg').showModal()};
+$('xOk').onclick=()=>$('xDlg').close();
+function copy(t,msg){const done=()=>toast(msg);const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){toast('Не вдалося скопіювати')}a.remove()};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb()}
+const reportText=()=>{const c=sum('cash'),d=sum('card');return 'Загальний звіт за '+new Date().toLocaleDateString('uk-UA')+'\nГотівка: '+fmt(c)+'\nБезготівка (картка): '+fmt(d)+'\nВсього: '+fmt(c+d)};
+$('closeCopy').onclick=()=>copy(reportText(),'Звіт скопійовано');
+const f2=n=>fmt(n).replace(' ₴','');
+const payName=p=>p==='cash'?'Готівка':'Безготівка';
+let lastText='';
+let curSale=null,delArm=0;
+function showReceipt(s,h){
+  curSale=s;delArm=0;$('rcDel').textContent='Скасувати чек';$('rcDel').style.display=h?'':'none';$('rcTitle').textContent=s.n?'Чек №'+s.n:'Чек';
+  $('rcBody').innerHTML='<div class="rc-head"><span>Назва</span><span>Ціна</span><span>К-сть</span><span>Сума</span></div>'+s.items.map(i=>`<div class="rc-row"><span>${i.cat}</span><span>${f2(i.price)}</span><span>${i.qty}</span><span>${f2(i.price*i.qty)}</span></div>`).join('')+(s.disc?`<div class="line"><span>Сума</span><span>${fmt(s.sub)}</span></div><div class="line"><span>Знижка ${s.disc}%</span><span>−${fmt(s.sub-s.total)}</span></div>`:'')+`<div class="line total"><span>Всього</span><span>${fmt(s.total)}</span></div><div class="line"><span>Тип оплати</span><span>${payName(s.pay)}</span></div>`;
+  lastText=s.items.map(i=>i.qty===1?`${i.cat} - ${f2(i.price)}`:`${i.cat} - ${f2(i.price)} x ${i.qty} = ${f2(i.price*i.qty)}`).join('\n')+(s.disc?'\nЗнижка '+s.disc+'%: −'+fmt(s.sub-s.total):'')+'\nВсього: '+fmt(s.total)+'\nТип оплати: '+payName(s.pay);
+  $('rcDlg').showModal();
+}
+$('rcCopy').onclick=()=>copy(lastText,'Чек скопійовано');
+$('rcOk').onclick=()=>$('rcDlg').close();
+function renderHist(){
+  st.sales.forEach((s,i)=>{if(!s.n)s.n=i+1});
+  $('histCount').textContent=st.sales.length?'Чеків за зміну: '+st.sales.length:'';
+  $('histList').innerHTML=st.sales.length?st.sales.map((s,i)=>`<button class="hist-row" data-i="${i}"><span>№${s.n} · ${new Date(s.time).toLocaleTimeString('uk-UA',{hour:'2-digit',minute:'2-digit'})}</span><span class="dim">${payName(s.pay)}</span><b>${fmt(s.total)}</b></button>`).reverse().join(''):'<div class="empty">Чеків поки що немає</div>';
+}
+$('histBtn').onclick=()=>{renderHist();$('histDlg').showModal()};
+$('histOk').onclick=()=>$('histDlg').close();
+$('histList').onclick=e=>{const b=e.target.closest('[data-i]');if(!b)return;showReceipt(st.sales[b.dataset.i],true)};
+$('rcDel').onclick=()=>{
+  if(!delArm){delArm=1;$('rcDel').textContent='Підтвердити скасування';setTimeout(()=>{delArm=0;$('rcDel').textContent='Скасувати чек'},3000);return}
+  st.sales=st.sales.filter(x=>x!==curSale);delArm=0;save();render();renderHist();$('rcDlg').close();toast('Чек скасовано');
+};
+const NOM=[1,2,5,10,20,50,100,200,500,1000,2000];
+$('calcList').innerHTML=NOM.map(n=>`<div class="calc-row"><span class="nom">${n} ₴</span><input class="name-input" data-n="${n}" type="text" inputmode="numeric" placeholder="0" autocomplete="off"><span class="sm dim">0 ₴</span></div>`).join('');
+function calc(){let t=0;document.querySelectorAll('#calcList input').forEach(e=>{const s=Math.floor(num(e.value))*e.dataset.n;t+=s;e.nextElementSibling.textContent=s.toLocaleString('uk-UA')+' ₴'});$('calcTotal').textContent=fmt(t)}
+$('calcList').oninput=calc;
+$('calcBtn').onclick=()=>$('calcDlg').showModal();
+$('calcReset').onclick=()=>{document.querySelectorAll('#calcList input').forEach(e=>e.value='');calc()};
+$('calcOk').onclick=()=>$('calcDlg').close();
+$('closeBtn').onclick=()=>$('closeDlg').showModal();
+$('closeNo').onclick=()=>$('closeDlg').close();
+$('closeYes').onclick=()=>{st={sales:[],cart:[],cat:null,pay:'cash',disc:0};$('custom').value='';$('given').value='';$('price').value='';save();render();$('closeDlg').close();toast('Зміну закрито')};
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+    <title>Font Restorer &amp; Cleaner | Олег Лясковський</title>
+    <link rel="stylesheet" href="../../style/main.css">
+    <script src="../../js/theme.js"></script>
+</head>
+<body class="detail">
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="font-restorer-cleaner.png" alt="Font Restorer &amp; Cleaner">
+            </div>
+            <div class="app-header-text">
+                <h1>Font Restorer &amp; Cleaner</h1>
+                <div class="app-subtitle">Очищення · Бекап · Відновлення шрифтів Windows</div>
+            </div>
+            <a href="https://mega.nz/folder/rRVnwRJL#oPPeLBsdvRyMU5lftCKmGw" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                Font Restorer &amp; Cleaner - це утиліта для наведення порядку зі шрифтами у Windows після встановлення
+                стороннього програмного забезпечення, яке нерідко залишає у системі десятки зайвих шрифтів.
+                Програма порівнює вміст системної папки шрифтів і папки користувача з вбудованим білим списком стандартних
+                шрифтів Windows 10/11, виявляє сторонні файли, створює їх резервну копію та видаляє разом із записами
+                у реєстрі. Окремий інструмент відновлення повертає стандартні значення FontSubstitutes, вмикає ClearType
+                та перезапускає кеш шрифтів - все це без зайвих діалогів і ручного редагування реєстру.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Основні функції</div>
+            <div class="action-list">
+
+                <div class="action-item">
+                    <div class="action-item-header">
+                        <div class="action-item-title">Аналіз</div>
+                    </div>
+                    <div class="action-item-desc">Сканує системну папку <code>C:\Windows\Fonts</code> та папку шрифтів поточного користувача. Порівнює знайдені файли з білим списком стандартних шрифтів Windows і виводить перелік сторонніх шрифтів з кількістю у кожному джерелі.</div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-item-header">
+                        <div class="action-item-title">Експорт та Очищення</div>
+                    </div>
+                    <div class="action-item-desc">Копіює всі сторонні шрифти у папку <code>Font_Backup</code> поруч із програмою, після чого видаляє файли та відповідні записи з реєстру Windows (HKLM та HKCU). Якщо файл зайнятий - повідомляє про необхідність перезавантаження.</div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-item-header">
+                        <div class="action-item-title">Відновити реєстр</div>
+                    </div>
+                    <div class="action-item-desc">Відновлює стандартні записи FontSubstitutes (Arial, Tahoma, Times New Roman та ін.), вмикає ClearType та згладжування шрифтів, зупиняє службу FontCache, видаляє файл кешу <code>FNTCACHE.DAT</code> та перезапускає службу.</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Вбудований білий список із понад 300 стандартних файлів шрифтів Windows 10/11: TrueType (.ttf/.ttc), OpenType (.otf) та растрові шрифти (.fon) для DOS/CMD</li>
+                <li>Сканування двох джерел одночасно - системної папки шрифтів і папки шрифтів поточного користувача (ручне встановлення через HKCU)</li>
+                <li>Автоматичний бекап перед видаленням - всі сторонні шрифти зберігаються у папку <code>Font_Backup</code> поруч із програмою</li>
+                <li>Очищення реєстру: видаляються записи з гілок HKLM та HKCU відповідно до джерела шрифту</li>
+                <li>Відновлення FontSubstitutes: повертає стандартні замінники шрифтів (MS Shell Dlg → Microsoft Sans Serif, Helvetica → Arial тощо)</li>
+                <li>Скидання ClearType: повертає стандартне згладжування шрифтів через параметри <code>Control Panel\Desktop</code></li>
+                <li>Очищення кешу шрифтів: зупиняє службу FontCache, видаляє FNTCACHE.DAT та перезапускає службу</li>
+                <li>Виконання операцій у фоновому потоці - інтерфейс не заморожується під час роботи</li>
+                <li>Живий журнал з часовими мітками та рівнями повідомлень (INFO, RESULT, OK, WARN, ERROR)</li>
+                <li>DPI-aware центрування вікна: коректно відображається на екранах з масштабуванням 125%, 150%, 200%</li>
+                <li>Запускається лише з правами адміністратора - програма автоматично запитує підвищення привілеїв через UAC</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Розрядність</div>
+                    <div class="req-value">x64</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Адміністратор</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Інтернет</div>
+                    <div class="req-value">Не потрібен</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../../js/footer.js"></script>
+
+</body>
+</html>

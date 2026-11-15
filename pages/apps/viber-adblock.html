@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+    <title>Viber AdBlock | Олег Лясковський</title>
+    <link rel="stylesheet" href="../../style/main.css">
+    <script src="../../js/theme.js"></script>
+</head>
+<body class="detail">
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../apps.html" class="back-btn">← Мої програми</a>
+        </div>
+
+        <div class="app-header">
+            <div class="app-header-icon">
+                <img src="viber-adblock.png" alt="Viber AdBlock">
+            </div>
+            <div class="app-header-text">
+                <h1>Viber AdBlock</h1>
+                <div class="app-subtitle">Блокування реклами та трекерів у десктопному Viber</div>
+            </div>
+            <a href="https://mega.nz/folder/CBs3QIYD#tyRj21JETtXwJPuAjIfjhg" class="download-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Завантажити з MEGA
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Про програму</div>
+            <p>
+                Viber AdBlock - це утиліта, яка прибирає рекламу та трекери з десктопної версії Viber
+                для Windows. Одним натисканням кнопки програма зупиняє Viber, блокує на рівні системи звернення
+                до відомих рекламних і трекінгових серверів, очищає рекламний кеш і бази даних профілю,
+                вимикає прапорці показу реклами прямо в конфігураційних файлах Viber, а тоді захищає ці зміни
+                від перезапису та перезапускає месенджер у «чистому» вигляді. Є і тихий режим без вікна —
+                підходить для автоматичного запуску, наприклад, при вході в систему.
+            </p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Що саме робить програма</div>
+            <div class="category-list">
+                <div class="category-item">
+                    <div class="category-item-title">Файл hosts</div>
+                    <div class="category-item-programs">Додає до C:\Windows\System32\drivers\etc\hosts понад 30 доменів реклами Viber, Taboola, Rakuten/RMP, Primis, AppNexus/Xandr, Amazon Ads, Mixpanel, Google Ads</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">DNS</div>
+                    <div class="category-item-programs">Автоматичне скидання DNS-кешу (ipconfig /flushdns) для застосування блокувань</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Кеш та бази даних</div>
+                    <div class="category-item-programs">Очищення папок кешу (Cache, GPUCache, Service Worker тощо) та видалення рекламних таблиць у viber.db через SQLite</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Права доступу</div>
+                    <div class="category-item-programs">Блокування запису у папки кешу через icacls, щоб Viber не міг відновити рекламні файли</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Конфігурації</div>
+                    <div class="category-item-programs">Вимкнення прапорців EnableAds, ShowAds, EnablePromotions у config.json та config.db (CommonSettings/UserSettings)</div>
+                </div>
+                <div class="category-item">
+                    <div class="category-item-title">Захист налаштувань</div>
+                    <div class="category-item-programs">config.json переводиться в режим «лише читання» після патчингу, щоб Viber не перезаписав зміни</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Особливості</div>
+            <ul class="feature-list">
+                <li>Повний цикл в один клік: зупинка Viber → патчинг hosts → скидання DNS → очищення кешу й БД → патчинг конфігів → автоматичний перезапуск Viber</li>
+                <li>Актуальний список рекламних доменів охоплює власну рекламну мережу Viber, Taboola, Rakuten/RMP, Primis, AppNexus/Xandr, Amazon Ads та аналітику Mixpanel і Google Ads</li>
+                <li>Автоматичний пошук усіх профілів Viber (%APPDATA%\ViberPC та %LOCALAPPDATA%\Viber\Profiles), включно з декількома акаунтами</li>
+                <li>Безпечна перевірка формату бази даних перед обробкою - якщо viber.db чи config.db зашифровані, програма коректно їх пропускає</li>
+                <li>VACUUM бази даних після очищення рекламних таблиць для зменшення розміру файлу</li>
+                <li>Детальний журнал операцій у реальному часі з покроковим статусом кожної дії</li>
+                <li>Тихий режим через ключ командного рядка -s / --silent - працює без GUI, веде лог у файл viber_adblock.log</li>
+                <li>Автоматичний запит прав адміністратора через UAC при звичайному запуску</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Системні вимоги</div>
+            <div class="requirements-grid">
+                <div class="req-item">
+                    <div class="req-label">Операційна система</div>
+                    <div class="req-value">Windows 10 / 11</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Потрібна програма</div>
+                    <div class="req-value">Viber для Windows</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Права</div>
+                    <div class="req-value">Адміністратор</div>
+                </div>
+                <div class="req-item">
+                    <div class="req-label">Інтернет</div>
+                    <div class="req-value">Не потрібен</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="../../js/footer.js"></script>
+
+</body>
+</html>
